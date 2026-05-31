@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useRef, useState } from 'react';
 import { saveArticle, deleteArticle } from '@/app/admin/article-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,12 +9,38 @@ import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Save, Trash, Image as ImageIcon } from 'lucide-react';
+import { Save, Trash, Upload } from 'lucide-react';
 
 export function ArticleForm({ article }: { article?: any }) {
   const [isPending, startTransition] = useActionState(async (state: any, formData: FormData) => {
     await saveArticle(formData);
   }, null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState(article?.imageUrl || '');
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (data.url) {
+        setImageUrl(data.url);
+      }
+    } catch (err) {
+      console.error('Upload failed', err);
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
 
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this article?')) {
@@ -62,13 +88,37 @@ export function ArticleForm({ article }: { article?: any }) {
                   <Input 
                     id="imageUrl" 
                     name="imageUrl" 
-                    defaultValue={article?.imageUrl} 
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
                     placeholder="https://... or /uploads/image.jpg" 
                   />
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleUpload}
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="bg-blue-600 text-white hover:bg-blue-700 shrink-0"
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {uploading ? 'Uploading...' : 'Upload'}
+                  </Button>
                 </div>
-                <p className="text-xs text-muted-foreground mt-2">
-                  To use the volume, upload files directly to the server and reference them as <code>/uploads/filename.ext</code>
-                </p>
+                {imageUrl && (
+                  <div className="mt-2 rounded-md overflow-hidden border border-border">
+                    <img
+                      src={imageUrl}
+                      alt="Preview"
+                      className="max-h-40 w-full object-cover"
+                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                    />
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

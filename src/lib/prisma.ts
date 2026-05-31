@@ -1,8 +1,10 @@
 import { PrismaClient } from '../generated/prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
-// @ts-ignore - Prisma 7.8.0 type definitions bug
-export const prisma = globalForPrisma.prisma || new PrismaClient({});
+export const prisma = globalForPrisma.prisma || new PrismaClient({
+  adapter: new PrismaPg(process.env.DATABASE_URL!),
+});
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

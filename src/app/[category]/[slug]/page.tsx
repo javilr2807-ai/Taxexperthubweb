@@ -41,7 +41,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
         href={`/${category}`}
         className="text-sm text-muted-foreground hover:text-navy"
       >
-        &larr; Back to {category.replace(/-/g, ' ')}
+        &larr; Back to {category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
       </Link>
 
       <h1 className="mt-8 font-display text-4xl md:text-5xl text-navy">{article.title}</h1>

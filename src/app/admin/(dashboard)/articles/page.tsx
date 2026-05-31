@@ -10,8 +10,16 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { PlusCircle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { ArticleActions } from '@/components/admin/ArticleActions';
+
+function wordCount(html: string): number {
+  const text = html.replace(/<[^>]*>/g, '');
+  return text.trim() ? text.trim().split(/\s+/).length : 0;
+}
+
+function formatCategory(slug: string): string {
+  return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
 
 export default async function AdminArticlesPage() {
   const articles = await prisma.article.findMany({
@@ -33,49 +41,45 @@ export default async function AdminArticlesPage() {
         </Link>
       </div>
 
-      <div className="rounded-md border border-border bg-card">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Title</TableHead>
-              <TableHead>Category</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {articles.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
-                  No articles found. Create your first one.
-                </TableCell>
-              </TableRow>
-            ) : (
-              articles.map((article) => (
-                <TableRow key={article.id}>
-                  <TableCell className="font-medium text-navy">
-                    {article.title}
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground capitalize">
-                      {article.category.replace('-', ' ')}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    {article.published ? (
-                      <Badge className="bg-green-100 text-green-800 hover:bg-green-100 border-green-200">Published</Badge>
-                    ) : (
-                      <Badge variant="secondary" className="bg-secondary text-muted-foreground">Draft</Badge>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <ArticleActions article={article} />
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+      <div className="space-y-4">
+        {articles.length === 0 ? (
+          <div className="rounded-md border border-border bg-card p-12 text-center text-muted-foreground">
+            No articles found. Create your first one.
+          </div>
+        ) : (
+          articles.map((article) => (
+            <div key={article.id} className="rounded-md border border-border bg-card p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs text-muted-foreground">
+                    {formatCategory(article.category)}
+                    <span className="mx-1.5">·</span>
+                    {new Date(article.publishDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                    <span className="mx-1.5">·</span>
+                    {wordCount(article.content)} words
+                  </p>
+                  <h3 className="mt-1 font-display text-xl text-navy">
+                    <Link href={`/admin/articles/${article.id}`} className="hover:text-brass transition-colors">
+                      {article.title}
+                    </Link>
+                  </h3>
+                  {article.excerpt && (
+                    <p className="mt-1 text-sm text-muted-foreground line-clamp-2 max-w-prose">
+                      {article.excerpt}
+                    </p>
+                  )}
+                </div>
+                <div className="shrink-0 flex items-start gap-1 pt-1">
+                  <ArticleActions article={article} />
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

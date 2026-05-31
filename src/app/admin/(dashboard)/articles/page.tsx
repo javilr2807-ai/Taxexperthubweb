@@ -9,8 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { PlusCircle, Edit } from 'lucide-react';
+import { PlusCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { ArticleActions } from '@/components/admin/ArticleActions';
 
 export default async function AdminArticlesPage() {
   const articles = await prisma.article.findMany({
@@ -68,12 +69,7 @@ export default async function AdminArticlesPage() {
                     )}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Link href={`/admin/articles/${article.id}`}>
-                      <Button variant="ghost" size="sm" className="text-navy hover:text-brass">
-                        <Edit className="h-4 w-4 mr-2" />
-                        Edit
-                      </Button>
-                    </Link>
+                    <ArticleActions article={article} />
                   </TableCell>
                 </TableRow>
               ))

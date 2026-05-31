@@ -1,8 +1,21 @@
-import { MetadataRoute } from "next";
+import { prisma } from "@/lib/prisma";
+import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://taxexpertshub.com";
-  
+
+  const articles = await prisma.article.findMany({
+    where: { published: true },
+    select: { slug: true, category: true, updatedAt: true, publishDate: true },
+  });
+
+  const articleUrls: MetadataRoute.Sitemap = articles.map((a) => ({
+    url: `${baseUrl}/${a.category}/${a.slug}`,
+    lastModified: a.updatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: baseUrl,
@@ -34,5 +47,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    ...articleUrls,
   ];
 }

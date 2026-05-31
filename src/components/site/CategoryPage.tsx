@@ -2,7 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { categories, type Category } from "@/lib/categories";
 
-export function CategoryPage({ category }: { category: Category }) {
+type ArticleSummary = {
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  imageUrl: string | null;
+  publishDate: Date;
+};
+
+export function CategoryPage({ category, articles = [] }: { category: Category; articles?: ArticleSummary[] }) {
   const others = categories.filter((c) => c.slug !== category.slug);
 
   return (
@@ -80,6 +88,55 @@ export function CategoryPage({ category }: { category: Category }) {
           ))}
         </div>
       </section>
+
+      {/* Articles */}
+      {articles.length > 0 && (
+        <section className="mx-auto max-w-7xl px-6 py-24">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="eyebrow">Latest articles</p>
+              <h2 className="mt-3 text-4xl md:text-5xl">The latest.</h2>
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {articles.map((a) => (
+              <Link
+                key={a.slug}
+                href={`/${category.slug}/${a.slug}`}
+                className="group rounded-lg border border-border bg-card overflow-hidden transition-shadow hover:shadow-lg"
+              >
+                {a.imageUrl && (
+                  <div className="aspect-video relative overflow-hidden">
+                    <img
+                      src={a.imageUrl}
+                      alt={a.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                )}
+                <div className="p-5">
+                  <p className="text-xs text-muted-foreground">
+                    {new Date(a.publishDate).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </p>
+                  <h3 className="mt-2 font-display text-xl text-navy group-hover:text-brass transition-colors">
+                    {a.title}
+                  </h3>
+                  {a.excerpt && (
+                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                      {a.excerpt}
+                    </p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Forms + Questions split */}
       <section className="border-y border-border bg-secondary/60">

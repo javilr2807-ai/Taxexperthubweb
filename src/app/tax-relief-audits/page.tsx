@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CategoryPage } from "@/components/site/CategoryPage";
 import { getCategory } from "@/lib/categories";
+import { prisma } from "@/lib/prisma";
 
 const cat = getCategory("tax-relief-audits")!;
 
@@ -18,6 +19,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
-  return <CategoryPage category={cat} />;
+export default async function Page() {
+  const articles = await prisma.article.findMany({
+    where: { category: "tax-relief-audits", published: true },
+    orderBy: { publishDate: "desc" },
+    select: { slug: true, title: true, excerpt: true, imageUrl: true, publishDate: true },
+  });
+
+  return <CategoryPage category={cat} articles={articles} />;
 }

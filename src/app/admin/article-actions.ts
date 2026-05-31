@@ -43,6 +43,36 @@ export async function saveArticle(formData: FormData) {
   redirect('/admin/articles');
 }
 
+export async function toggleArticle(formData: FormData) {
+  const id = formData.get('id') as string;
+  const article = await prisma.article.findUnique({ where: { id } });
+  if (!article) throw new Error('Article not found');
+
+  await prisma.article.update({
+    where: { id },
+    data: { published: !article.published },
+  });
+
+  revalidatePath('/admin/articles');
+  revalidatePath('/');
+  revalidatePath(`/${article.category}`);
+}
+
+export async function deleteArticleInline(formData: FormData) {
+  const id = formData.get('id') as string;
+  const article = await prisma.article.findUnique({ where: { id } });
+
+  if (!article) return;
+
+  await prisma.article.delete({ where: { id } });
+
+  revalidatePath('/admin/articles');
+  if (article.published) {
+    revalidatePath('/');
+    revalidatePath(`/${article.category}`);
+  }
+}
+
 export async function deleteArticle(id: string) {
   await prisma.article.delete({
     where: { id },

@@ -54,11 +54,7 @@ export default async function AdminArticlesPage() {
                   <p className="text-xs text-muted-foreground">
                     {formatCategory(article.category)}
                     <span className="mx-1.5">·</span>
-                    {new Date(article.publishDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
+                    {new Date(article.publishDate).toLocaleDateString('en-GB')}
                     <span className="mx-1.5">·</span>
                     {wordCount(article.content)} words
                   </p>

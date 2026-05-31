@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { deleteArticleInline } from '@/app/admin/article-actions';
+import { toggleArticle, deleteArticleInline } from '@/app/admin/article-actions';
 
 type Article = {
   id: string;
@@ -34,15 +34,22 @@ export function ArticleActions({ article }: { article: Article }) {
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
         </Button>
       </Link>
-      <Link
-        href={`/${article.category}/${article.slug}`}
-        target="_blank"
-        title="View article"
-      >
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy hover:text-brass">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      <form action={toggleArticle}>
+        <input type="hidden" name="id" value={article.id} />
+        <Button
+          type="submit"
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 text-navy hover:text-brass"
+          title={article.published ? 'Published' : 'Draft'}
+        >
+          {article.published ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          )}
         </Button>
-      </Link>
+      </form>
       <form action={handleDelete}>
         <input type="hidden" name="id" value={article.id} />
         <Button

@@ -7,7 +7,7 @@ import type { Metadata } from 'next';
 export async function generateMetadata({ params }: { params: Promise<{ category: string; slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const article = await prisma.article.findFirst({
-    where: { slug, published: true },
+    where: { slug },
     select: { title: true, excerpt: true, imageUrl: true, category: true },
   });
 
@@ -28,7 +28,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
   const { category, slug } = await params;
 
   const article = await prisma.article.findFirst({
-    where: { slug, published: true },
+    where: { slug },
   });
 
   if (!article || article.category !== category) {

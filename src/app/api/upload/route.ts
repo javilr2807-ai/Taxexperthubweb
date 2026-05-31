@@ -13,7 +13,7 @@ export async function POST(request: Request) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+  const uploadsDir = path.join(process.cwd(), 'uploads');
   await mkdir(uploadsDir, { recursive: true });
 
   const uniqueName = `${Date.now()}-${file.name}`;
@@ -21,5 +21,5 @@ export async function POST(request: Request) {
 
   await writeFile(filePath, buffer);
 
-  return NextResponse.json({ url: `/uploads/${uniqueName}` });
+  return NextResponse.json({ url: `/api/uploads/${uniqueName}` });
 }

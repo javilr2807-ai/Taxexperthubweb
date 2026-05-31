@@ -20,20 +20,6 @@ export function ArticleActions({ article }: { article: Article }) {
 
   return (
     <div className="flex items-center justify-end gap-1">
-      <Link
-        href={`/${article.category}/${article.slug}`}
-        target="_blank"
-        title="View article"
-      >
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy hover:text-brass">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-        </Button>
-      </Link>
-      <Link href={`/admin/articles/${article.id}`} title="Edit article">
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy hover:text-brass">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
-        </Button>
-      </Link>
       <form action={toggleArticle}>
         <input type="hidden" name="id" value={article.id} />
         <Button
@@ -50,6 +36,20 @@ export function ArticleActions({ article }: { article: Article }) {
           )}
         </Button>
       </form>
+      <Link href={`/admin/articles/${article.id}`} title="Edit article">
+        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy hover:text-brass">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+        </Button>
+      </Link>
+      <Link
+        href={`/${article.category}/${article.slug}`}
+        target="_blank"
+        title="View article"
+      >
+        <Button variant="ghost" size="icon" className="h-8 w-8 text-navy hover:text-brass">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </Button>
+      </Link>
       <form action={handleDelete}>
         <input type="hidden" name="id" value={article.id} />
         <Button

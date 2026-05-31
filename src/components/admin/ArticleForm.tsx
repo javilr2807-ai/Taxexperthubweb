@@ -1,6 +1,7 @@
 'use client';
 
-import { useActionState, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { saveArticle, deleteArticle } from '@/app/admin/article-actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,15 +11,23 @@ import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Save, Trash, Upload } from 'lucide-react';
+import { toast } from 'sonner';
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button type="submit" className="flex-1 bg-navy text-paper hover:bg-navy-soft" disabled={pending}>
+      <Save className="mr-2 h-4 w-4" /> {pending ? 'Saving...' : 'Save Article'}
+    </Button>
+  );
+}
 
 export function ArticleForm({ article }: { article?: any }) {
-  const [isPending, startTransition] = useActionState(async (state: any, formData: FormData) => {
-    await saveArticle(formData);
-  }, null);
-
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState(article?.imageUrl || '');
+  const [published, setPublished] = useState(article?.published || false);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,9 +42,13 @@ export function ArticleForm({ article }: { article?: any }) {
       const data = await res.json();
       if (data.url) {
         setImageUrl(data.url);
+        toast.success('Image uploaded successfully');
+      } else {
+        toast.error(data.error || 'Upload failed');
       }
     } catch (err) {
       console.error('Upload failed', err);
+      toast.error('Upload failed');
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -49,9 +62,10 @@ export function ArticleForm({ article }: { article?: any }) {
   };
 
   return (
-    <form action={(formData) => startTransition(formData)}>
+    <form action={saveArticle}>
       {article?.id && <input type="hidden" name="id" value={article.id} />}
-      
+      <input type="hidden" name="published" value={published ? 'true' : 'false'} />
+
       <div className="grid gap-6 md:grid-cols-3">
         <div className="md:col-span-2 space-y-6">
           <Card className="border-border">
@@ -66,11 +80,11 @@ export function ArticleForm({ article }: { article?: any }) {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="content">Body Content (HTML/Text)</Label>
-                <Textarea 
-                  id="content" 
-                  name="content" 
-                  defaultValue={article?.content} 
-                  required 
+                <Textarea
+                  id="content"
+                  name="content"
+                  defaultValue={article?.content}
+                  required
                   className="min-h-[400px] font-mono text-sm"
                 />
               </div>
@@ -85,12 +99,12 @@ export function ArticleForm({ article }: { article?: any }) {
               <div className="space-y-2">
                 <Label htmlFor="imageUrl">Featured Image URL</Label>
                 <div className="flex gap-2">
-                  <Input 
-                    id="imageUrl" 
-                    name="imageUrl" 
+                  <Input
+                    id="imageUrl"
+                    name="imageUrl"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
-                    placeholder="https://... or /uploads/image.jpg" 
+                    placeholder="https://... or /uploads/image.jpg"
                   />
                   <input
                     ref={fileInputRef}
@@ -134,18 +148,22 @@ export function ArticleForm({ article }: { article?: any }) {
                 <Label htmlFor="published">Status</Label>
                 <div className="flex items-center gap-2">
                   <span className="text-sm text-muted-foreground">Draft</span>
-                  <Switch id="published" name="published" value="true" defaultChecked={article?.published} />
+                  <Switch
+                    id="published"
+                    checked={published}
+                    onCheckedChange={setPublished}
+                  />
                   <span className="text-sm text-navy font-medium">Published</span>
                 </div>
               </div>
 
               <div className="space-y-2 pt-4">
                 <Label htmlFor="publishDate">Publish Date</Label>
-                <Input 
-                  id="publishDate" 
-                  name="publishDate" 
-                  type="datetime-local" 
-                  defaultValue={article?.publishDate ? new Date(article.publishDate).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16)} 
+                <Input
+                  id="publishDate"
+                  name="publishDate"
+                  type="datetime-local"
+                  defaultValue={article?.publishDate ? new Date(article.publishDate).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16)}
                 />
               </div>
             </CardContent>
@@ -160,7 +178,7 @@ export function ArticleForm({ article }: { article?: any }) {
                 <Label htmlFor="slug">URL Slug</Label>
                 <Input id="slug" name="slug" defaultValue={article?.slug} required placeholder="my-awesome-article" />
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
                 <Select name="category" defaultValue={article?.category || 'personal-income-tax'}>
@@ -184,9 +202,7 @@ export function ArticleForm({ article }: { article?: any }) {
           </Card>
 
           <div className="flex gap-4">
-            <Button type="submit" className="flex-1 bg-navy text-paper hover:bg-navy-soft" disabled={isPending as unknown as boolean}>
-              <Save className="mr-2 h-4 w-4" /> Save Article
-            </Button>
+            <SubmitButton />
             {article?.id && (
               <Button type="button" variant="destructive" onClick={handleDelete}>
                 <Trash className="h-4 w-4" />

@@ -6,16 +6,16 @@ import heroHome from "@/assets/hero-home.jpg";
 
 
 export const metadata: Metadata = {
-  title: "Tax Experts Hub — U.S. Tax Journalism in Plain English",
+  title: "Tax Experts Hub | U.S. Tax Guides for Individuals & Small Businesses",
   description:
-    "Independent U.S. tax coverage for filers, freelancers, investors, and anyone facing an IRS notice. Form 1040 to Offer in Compromise.",
+    "Practical U.S. tax guides for individuals, freelancers, self-employed workers, and small businesses. Learn about IRS forms, tax deductions, credits, audits, and filing rules in plain English.",
   alternates: {
     canonical: "https://taxexpertshub.com",
   },
   openGraph: {
-    title: "Tax Experts Hub",
+    title: "Tax Experts Hub | U.S. Tax Guides for Individuals & Small Businesses",
     description:
-      "Plain-English U.S. tax coverage. Personal filings, freelancer taxes, crypto and investments, IRS relief and audits.",
+      "Practical U.S. tax guides for individuals, freelancers, self-employed workers, and small businesses. Learn about IRS forms, tax deductions, credits, audits, and filing rules in plain English.",
     url: "https://taxexpertshub.com",
   },
 };
@@ -59,19 +59,30 @@ export default function HomePage() {
             backgroundSize: "56px 56px",
           }}
         />
-        <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-24 md:pt-28 md:pb-32">
-          <h1 className="mt-8 max-w-5xl text-6xl leading-[1.02] md:text-8xl">
-            U.S. taxes,{" "}
-            <span className="italic text-accent">finally</span> written for
-            the person who has to <span className="brass-underline">pay them</span>.
+        <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-20 md:pt-28 md:pb-32">
+          <h1 className="max-w-5xl text-4xl leading-[1.08] sm:text-5xl md:text-7xl lg:text-8xl">
+            Tax Guides{" "}
+            <span className="text-accent">That Actually Make Sense</span>
           </h1>
 
-          <p className="mt-12 max-w-xl text-lg leading-relaxed text-paper/80">
-            Tax Experts Hub is an independent desk for American taxpayers.
-            Four editorial sections cover everything from the Form 1040 on
-            your kitchen table to the CP2000 in your mailbox — without the
-            jargon, the affiliate links, or the doom.
+          <h2 className="mt-6 max-w-2xl text-xl font-display tracking-tight text-accent sm:text-2xl md:text-3xl">
+            For Individuals, Freelancers &amp; Small Businesses
+          </h2>
+
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-paper/70 sm:text-lg">
+            Learn how to file taxes, maximize deductions, avoid IRS penalties,
+            and understand U.S. tax rules without the confusing jargon.
           </p>
+
+          <Link
+            href={`/${featured.slug}`}
+            className="group mt-10 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.22em] text-accent transition-colors hover:text-accent/80"
+          >
+            Browse Tax Guides
+            <span aria-hidden className="transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
         </div>
       </section>
 

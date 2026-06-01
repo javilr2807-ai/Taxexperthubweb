@@ -336,6 +336,25 @@
     color: var(--border);
   }
 
+  .article-body {
+    max-width: 48rem;
+  }
+
+  .article-image {
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .article-image-el {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
   .article-layout {
     display: grid;
     grid-template-columns: 1fr;

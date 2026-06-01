@@ -1,6 +1,5 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -24,6 +23,26 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   };
 }
 
+function formatCategory(slug: string): string {
+  return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+function estimateReadTime(html: string): number {
+  const text = html.replace(/<[^>]*>/g, '');
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  return Math.max(1, Math.round(words / 200));
+}
+
+function extractHeadings(html: string): string[] {
+  const headings: string[] = [];
+  const regex = /<h2[^>]*>(.*?)<\/h2>/g;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    headings.push(match[1].replace(/<[^>]*>/g, ''));
+  }
+  return headings;
+}
+
 export default async function ArticlePage({ params }: { params: Promise<{ category: string; slug: string }> }) {
   const { category, slug } = await params;
 
@@ -35,45 +54,79 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
     notFound();
   }
 
+  const relatedArticles = await prisma.article.findMany({
+    where: { category, published: true, slug: { not: slug } },
+    orderBy: { publishDate: 'desc' },
+    take: 4,
+    select: { slug: true, title: true },
+  });
+
+  const headings = extractHeadings(article.content);
+  const readTime = estimateReadTime(article.content);
+
   return (
-    <article className="mx-auto max-w-3xl px-6 py-16 md:py-24">
-      <Link
-        href={`/${category}`}
-        className="text-sm text-muted-foreground hover:text-navy"
-      >
-        &larr; Back to {category.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
-      </Link>
+    <article className="tax-article mx-auto max-w-7xl px-6 py-12 md:py-16">
+      <nav className="breadcrumbs">
+        <Link href="/">Home</Link>
+        <span className="sep">›</span>
+        <Link href={`/${category}`}>{formatCategory(category)}</Link>
+        <span className="sep">›</span>
+        <span>Overtime Pay &amp; Taxes</span>
+      </nav>
 
-      <h1 className="mt-8 font-display text-4xl md:text-5xl text-navy">{article.title}</h1>
+      <header className="article-header">
+        <h1>{article.title}</h1>
 
-      <p className="mt-4 text-sm text-muted-foreground">
-        {new Date(article.publishDate).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })}
-      </p>
+        {article.excerpt && (
+          <p className="article-intro">{article.excerpt}</p>
+        )}
 
-      {article.imageUrl && (
-        <div className="mt-8 aspect-video relative overflow-hidden rounded-lg border border-border">
-          <img
-            src={article.imageUrl}
-            alt={article.title}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
+        <div className="article-meta">
+          <span className="author">By TaxExpertsHub Team</span>
+          <span className="dot">·</span>
+          <span className="date">
+            Updated {new Date(article.publishDate).toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+            })}
+          </span>
+          <span className="dot">·</span>
+          <span className="read-time">{readTime} min read</span>
         </div>
-      )}
+      </header>
 
-      {article.excerpt && (
-        <p className="mt-8 text-lg text-muted-foreground italic leading-relaxed">
-          {article.excerpt}
-        </p>
-      )}
+      <div className="article-layout">
+        <main className="article-content">
+          <div dangerouslySetInnerHTML={{ __html: article.content }} />
+        </main>
 
-      <div
-        className="mt-10 prose prose-lg max-w-none"
-        dangerouslySetInnerHTML={{ __html: article.content }}
-      />
+        <aside className="article-sidebar">
+          {headings.length > 0 && (
+            <div className="sidebar-card">
+              <h3>On this page</h3>
+              <ul>
+                {headings.map((h, i) => (
+                  <li key={i}>{h}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {relatedArticles.length > 0 && (
+            <div className="sidebar-card">
+              <h3>Related Articles</h3>
+              <ul>
+                {relatedArticles.map((a) => (
+                  <li key={a.slug}>
+                    <Link href={`/${category}/${a.slug}`}>{a.title}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </aside>
+      </div>
     </article>
   );
 }

@@ -182,18 +182,29 @@
   }
 }
 
-@media (max-width: 767px) {
-  section {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+/* ─── Mobile: consistent lateral padding (320 px–430 px) ─── */
+@media (max-width: 768px) {
+  /* Override Tailwind px-6 (24px) → 20px on all layout containers */
+  .px-6 {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
-  .py-24 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+  /* Only add padding to sections that DON'T have a child max-w-* wrapper
+     (that wrapper already provides its own padding via .px-6 override).
+     Avoids double-padding on sections like Latest Guides. */
+  main > section:not(:has(> div[class*="max-w-"])):not(:has(> div[class*="mx-auto"])) {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 
-  h1.text-5xl,
+  /* Public-facing grids → single column (exclude admin & gap-px grids) */
+  main > section .grid:not([class*="gap-px"]) {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Headline sizing */
+  h1,
   h2.text-5xl {
     font-size: clamp(1.8rem, 7vw, 2.5rem) !important;
   }
@@ -201,10 +212,17 @@
   h2.text-4xl {
     font-size: clamp(1.5rem, 6vw, 2rem) !important;
   }
+}
 
-  .max-w-7xl {
-    padding-left: 1.25rem !important;
-    padding-right: 1.25rem !important;
+/* Extra guard for very narrow viewports (320 px–430 px) */
+@media (max-width: 430px) {
+  main > section:not(:has(> div[class*="max-w-"])):not(:has(> div[class*="mx-auto"])) {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  main > section .grid:not([class*="gap-px"]) {
+    grid-template-columns: 1fr !important;
   }
 }
 

@@ -20,9 +20,13 @@ const workSans = Work_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://taxexpertshub.com"),
-  title: "Tax Experts Hub — U.S. Tax Journalism in Plain English",
-  description: "Plain-English U.S. tax coverage for individuals, freelancers, investors, and anyone holding an IRS notice they don't understand.",
+  title: "Tax Experts Hub | U.S. Tax Guides for Individuals & Small Businesses",
+  description: "Practical U.S. tax guides for individuals, freelancers, self-employed workers, and small businesses. Learn about IRS forms, tax deductions, credits, audits, and filing rules in plain English.",
   authors: [{ name: "Tax Experts Hub" }],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     siteName: "Tax Experts Hub",
     type: "website",

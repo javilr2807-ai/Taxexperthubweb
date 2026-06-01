@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { logout } from '../actions';
 import { Button } from '@/components/ui/button';
-import { LogOut, FileText, Settings } from 'lucide-react';
+import { LogOut, FileText } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
@@ -18,13 +18,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           >
             <FileText className="h-4 w-4" />
             Articles
-          </Link>
-          <Link
-            href="/admin/settings"
-            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-paper/70 hover:bg-navy-soft hover:text-paper"
-          >
-            <Settings className="h-4 w-4" />
-            Settings
           </Link>
         </nav>
         <div className="absolute bottom-4 left-4 right-4 md:static md:mt-auto md:p-4">

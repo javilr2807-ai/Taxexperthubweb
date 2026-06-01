@@ -56,13 +56,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
     notFound();
   }
 
-  const relatedArticles = await prisma.article.findMany({
-    where: { category, published: true, slug: { not: slug } },
-    orderBy: { publishDate: 'desc' },
-    take: 4,
-    select: { slug: true, title: true, excerpt: true, imageUrl: true },
-  });
-
   const allRelated = await prisma.article.findMany({
     where: { published: true, slug: { not: slug } },
     orderBy: { publishDate: 'desc' },
@@ -70,53 +63,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
     select: { slug: true, title: true, excerpt: true, imageUrl: true, category: true },
   });
 
-  const youMayAlsoLike = allRelated.filter(a => a.category !== category || relatedArticles.length === 0).slice(0, 4);
+  const youMayAlsoLike = allRelated.slice(0, 4);
 
   const readTime = estimateReadTime(article.content);
   const fallbackSrc = fallbackImages[category];
 
-  const headings: string[] = [];
-  const headingRegex = /<h2[^>]*>(.*?)<\/h2>/g;
-  let m;
-  while ((m = headingRegex.exec(article.content)) !== null) {
-    headings.push(m[1].replace(/<[^>]*>/g, ''));
-  }
-
   return (
     <article className="tax-article">
       <div className="article-layout">
-        <aside className="article-sidebar">
-          {headings.length > 0 && (
-            <div className="sidebar-card">
-              <h3>On this page</h3>
-              <ul>
-                {headings.map((h, i) => (
-                  <li key={i}>{h}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {relatedArticles.length > 0 && (
-            <div className="sidebar-card">
-              <h3>Related Articles</h3>
-              <ul>
-                {relatedArticles.map((a) => (
-                  <li key={a.slug}>
-                    <Link href={`/${category}/${a.slug}`}>{a.title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          <div className="sidebar-card sidebar-cta">
-            <h3>Tax Question?</h3>
-            <p>Our editorial team covers IRS forms, deductions, credits, and filing rules. Browse our guides or reach out with your topic.</p>
-            <Link href="/contact" className="sidebar-cta-btn">Contact our team</Link>
-          </div>
-        </aside>
-
         <main className="article-main">
           <nav className="breadcrumbs">
             <Link href="/">Home</Link>

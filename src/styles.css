@@ -304,116 +304,16 @@
     color: var(--border);
   }
 
-  /* ── Layout: content column + sidebar ── */
+  /* ── Layout: centered content column ── */
   .article-layout {
     display: flex;
-    flex-direction: column-reverse;
-    gap: 2.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    .article-layout {
-      flex-direction: row;
-      gap: 3rem;
-      align-items: flex-start;
-      justify-content: center;
-    }
+    justify-content: center;
   }
 
   .article-main {
     min-width: 0;
-    flex: 1;
+    width: 100%;
     max-width: 900px;
-  }
-
-  /* ── Sidebar ── */
-  .article-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  @media (min-width: 1024px) {
-    .article-sidebar {
-      width: 300px;
-      flex-shrink: 0;
-      position: sticky;
-      top: 6rem;
-      align-self: start;
-    }
-  }
-
-  .sidebar-card {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    background: var(--card);
-  }
-
-  .sidebar-card h3 {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--muted-foreground);
-    margin: 0 0 0.75rem;
-  }
-
-  .sidebar-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .sidebar-card li {
-    font-size: 0.85rem;
-    line-height: 1.5;
-    padding: 0.4rem 0;
-    color: var(--foreground);
-    border-top: 1px solid var(--border);
-  }
-
-  .sidebar-card li:first-child {
-    border-top: none;
-  }
-
-  .sidebar-card li a {
-    color: var(--navy);
-    text-decoration: none;
-    transition: color 0.15s;
-  }
-
-  .sidebar-card li a:hover {
-    color: var(--brass);
-  }
-
-  .sidebar-cta {
-    background: color-mix(in oklab, var(--navy) 4%, transparent);
-    border-color: var(--navy-soft);
-  }
-
-  .sidebar-cta p {
-    font-size: 0.82rem;
-    line-height: 1.6;
-    color: var(--muted-foreground);
-    margin: 0 0 1rem;
-  }
-
-  .sidebar-cta-btn {
-    display: inline-block;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--paper);
-    background: var(--navy);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.15s;
-  }
-
-  .sidebar-cta-btn:hover {
-    background: var(--navy-soft);
   }
 
   /* ── Header ── */

@@ -38,17 +38,17 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
           }}
         />
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
-            <p className="eyebrow text-paper/60">The {category.shortTitle} Desk</p>
-            <h1 className="mt-4 max-w-4xl text-4xl leading-[1.08] sm:text-5xl md:text-7xl">
+            <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#B8C2D9]">The {category.shortTitle} Desk</p>
+            <h1 className="mt-4 max-w-4xl text-4xl leading-[1.08] sm:text-5xl md:text-7xl text-[#DDBB85]">
               {category.title}.
             </h1>
-            <p className="mt-4 max-w-2xl font-display text-xl italic text-paper/80 md:text-2xl lg:text-3xl">
+            <p className="mt-4 max-w-2xl font-display text-xl italic text-[#F0D8A0] md:text-2xl lg:text-3xl">
               {category.tagline}
             </p>
-            <p className="mt-6 max-w-2xl text-sm leading-relaxed text-paper/75 sm:text-base">
+            <p className="mt-6 max-w-2xl text-sm leading-relaxed text-white/90 sm:text-base">
               {category.description}
             </p>
-            <p className="mt-6 text-[11px] uppercase tracking-[0.22em] text-paper/50">
+            <p className="mt-6 text-[11px] uppercase tracking-[0.22em] text-white/75">
               Who this is for · {category.audience}
             </p>
         </div>

@@ -4,7 +4,8 @@ import path from 'path';
 
 export async function GET(request: Request, { params }: { params: Promise<{ name: string }> } ) {
   const { name } = await params;
-  const filePath = path.join(process.cwd(), 'uploads', name);
+  const decodedName = decodeURIComponent(name);
+  const filePath = path.join(process.cwd(), 'uploads', decodedName);
 
   try {
     const file = await readFile(filePath);

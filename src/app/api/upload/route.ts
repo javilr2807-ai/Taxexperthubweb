@@ -16,7 +16,8 @@ export async function POST(request: Request) {
   const uploadsDir = path.join(process.cwd(), 'uploads');
   await mkdir(uploadsDir, { recursive: true });
 
-  const uniqueName = `${Date.now()}-${file.name}`;
+  const safeName = file.name.replace(/\s+/g, '-');
+  const uniqueName = `${Date.now()}-${safeName}`;
   const filePath = path.join(uploadsDir, uniqueName);
 
   await writeFile(filePath, buffer);

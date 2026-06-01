@@ -60,50 +60,18 @@ export default function HomePage() {
           }}
         />
         <div className="relative mx-auto max-w-7xl px-6 pt-20 pb-24 md:pt-28 md:pb-32">
-          <div className="flex items-center gap-3">
-            <span className="pill border-paper/30 bg-transparent text-paper/80">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-              Tax Year 2025 · Filing Season Coverage
-            </span>
-          </div>
-
           <h1 className="mt-8 max-w-5xl text-6xl leading-[1.02] md:text-8xl">
             U.S. taxes,{" "}
             <span className="italic text-accent">finally</span> written for
             the person who has to <span className="brass-underline">pay them</span>.
           </h1>
 
-          <div className="mt-12 grid gap-12 md:grid-cols-12">
-            <p className="max-w-xl text-lg leading-relaxed text-paper/80 md:col-span-7">
-              Tax Experts Hub is an independent desk for American taxpayers.
-              Four editorial sections cover everything from the Form 1040 on
-              your kitchen table to the CP2000 in your mailbox — without the
-              jargon, the affiliate links, or the doom.
-            </p>
-            <div className="md:col-span-5">
-              <p className="eyebrow text-paper/60">By the numbers</p>
-              <dl className="mt-4 grid grid-cols-3 gap-6 border-t border-paper/20 pt-6">
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.18em] text-paper/50">
-                    Desks
-                  </dt>
-                  <dd className="mt-2 font-display text-4xl text-paper">04</dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.18em] text-paper/50">
-                    Forms
-                  </dt>
-                  <dd className="mt-2 font-display text-4xl text-paper">25+</dd>
-                </div>
-                <div>
-                  <dt className="text-[10px] uppercase tracking-[0.18em] text-paper/50">
-                    States
-                  </dt>
-                  <dd className="mt-2 font-display text-4xl text-paper">50</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
+          <p className="mt-12 max-w-xl text-lg leading-relaxed text-paper/80">
+            Tax Experts Hub is an independent desk for American taxpayers.
+            Four editorial sections cover everything from the Form 1040 on
+            your kitchen table to the CP2000 in your mailbox — without the
+            jargon, the affiliate links, or the doom.
+          </p>
         </div>
       </section>
 

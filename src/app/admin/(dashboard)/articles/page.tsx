@@ -75,6 +75,21 @@ export default async function AdminArticlesPage() {
         </Link>
       </div>
 
+      <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="rounded-md border border-border bg-card p-5 text-center">
+          <p className="text-3xl font-display text-navy">{articles.length}</p>
+          <p className="text-xs text-muted-foreground mt-1">Total</p>
+        </div>
+        <div className="rounded-md border border-border bg-card p-5 text-center">
+          <p className="text-3xl font-display text-navy">{drafts.length}</p>
+          <p className="text-xs text-muted-foreground mt-1">Borradores</p>
+        </div>
+        <div className="rounded-md border border-border bg-card p-5 text-center">
+          <p className="text-3xl font-display text-navy">{published.length}</p>
+          <p className="text-xs text-muted-foreground mt-1">Publicados</p>
+        </div>
+      </div>
+
       {articles.length === 0 ? (
         <div className="rounded-md border border-border bg-card p-12 text-center text-muted-foreground">
           No articles found. Create your first one.

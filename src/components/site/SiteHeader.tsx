@@ -14,9 +14,6 @@ export function SiteHeader() {
           <span className="font-display text-2xl leading-none text-navy">
             Tax Experts <span className="italic text-navy-soft">Hub</span>
           </span>
-          <span className="hidden text-[10px] uppercase tracking-[0.2em] text-muted-foreground md:inline">
-            est. 2026 · U.S.
-          </span>
         </Link>
         <nav className="hidden items-center gap-7 text-sm text-navy md:flex">
           {categories.map((c) => (
@@ -34,12 +31,6 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link
-          href="/"
-          className="hidden rounded-full border border-navy bg-navy px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-paper transition-colors hover:bg-navy-soft md:inline-flex"
-        >
-          Subscribe
-        </Link>
       </div>
     </header>
   );

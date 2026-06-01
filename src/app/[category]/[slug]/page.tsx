@@ -92,7 +92,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
             <h1>{article.title}</h1>
 
             <div className="article-meta">
-              <span>{formatCategory(article.category)}</span>
+              <span>TaxExperts Team</span>
               <span className="dot">·</span>
               <span>{new Date(article.publishDate).toLocaleDateString('en-GB')}</span>
               <span className="dot">·</span>

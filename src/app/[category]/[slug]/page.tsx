@@ -83,10 +83,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
           <header className="article-header">
             <h1>{article.title}</h1>
 
-            {article.excerpt && (
-              <p className="article-intro">{article.excerpt}</p>
-            )}
-
             <div className="article-meta">
               <span className="author">By TaxExpertsHub Team</span>
               <span className="dot">·</span>

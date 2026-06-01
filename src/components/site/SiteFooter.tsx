@@ -71,7 +71,17 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-paper/15 pt-6 text-xs text-paper/50 md:flex-row md:items-center">
+        <div className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-paper/15 pt-6 text-xs text-paper/50">
+          <Link href="/about" className="hover:text-accent transition-colors">About</Link>
+          <Link href="/contact" className="hover:text-accent transition-colors">Contact</Link>
+          <span className="text-paper/20" aria-hidden>|</span>
+          <Link href="/privacy-policy" className="hover:text-accent transition-colors">Privacy</Link>
+          <Link href="/terms-of-service" className="hover:text-accent transition-colors">Terms</Link>
+          <Link href="/cookie-policy" className="hover:text-accent transition-colors">Cookies</Link>
+          <Link href="/legal-notice" className="hover:text-accent transition-colors">Legal Notice</Link>
+        </div>
+
+        <div className="mt-6 flex flex-col items-start justify-between gap-4 text-xs text-paper/50 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Tax Experts Hub. All rights reserved.</p>
           <p className="tracking-[0.18em] uppercase">IRS-aware. Audience-first.</p>
         </div>

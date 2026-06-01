@@ -33,16 +33,6 @@ function estimateReadTime(html: string): number {
   return Math.max(1, Math.round(words / 200));
 }
 
-function extractHeadings(html: string): string[] {
-  const headings: string[] = [];
-  const regex = /<h2[^>]*>(.*?)<\/h2>/g;
-  let match;
-  while ((match = regex.exec(html)) !== null) {
-    headings.push(match[1].replace(/<[^>]*>/g, ''));
-  }
-  return headings;
-}
-
 export default async function ArticlePage({ params }: { params: Promise<{ category: string; slug: string }> }) {
   const { category, slug } = await params;
 
@@ -61,7 +51,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
     select: { slug: true, title: true },
   });
 
-  const headings = extractHeadings(article.content);
   const readTime = estimateReadTime(article.content);
 
   return (
@@ -102,17 +91,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
         </main>
 
         <aside className="article-sidebar">
-          {headings.length > 0 && (
-            <div className="sidebar-card">
-              <h3>On this page</h3>
-              <ul>
-                {headings.map((h, i) => (
-                  <li key={i}>{h}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           {relatedArticles.length > 0 && (
             <div className="sidebar-card">
               <h3>Related Articles</h3>

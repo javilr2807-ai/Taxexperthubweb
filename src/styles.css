@@ -656,21 +656,36 @@
   .bottom-line {
     width: 100%;
     background: var(--navy);
-    color: var(--paper);
+    color: rgba(255,255,255,0.92);
     border-radius: 18px;
     padding: 32px;
     margin: 2.5rem 0 0;
   }
 
   .bottom-line h2 {
-    color: var(--brass) !important;
+    color: #F4C15D !important;
     margin-top: 0 !important;
     font-size: 1.3rem;
   }
 
+  .bottom-line strong,
+  .bottom-line b {
+    font-weight: 700;
+    color: #F4C15D;
+  }
+
+  .bottom-line a {
+    color: #F4C15D;
+    text-decoration: underline;
+    transition: color 0.15s;
+  }
+
+  .bottom-line a:hover {
+    color: #FFD97A;
+  }
+
   .bottom-line p {
-    color: var(--paper);
-    opacity: 0.92;
+    color: rgba(255,255,255,0.92);
     margin-bottom: 0;
     font-size: 1.05rem;
     line-height: 1.8;

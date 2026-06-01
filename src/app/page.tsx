@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { categories } from "@/lib/categories";
+import { prisma } from "@/lib/prisma";
 import heroHome from "@/assets/hero-home.jpg";
 
 
@@ -20,8 +21,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
   const [featured, ...rest] = categories;
+
+  const publishedArticles = await prisma.article.findMany({
+    where: { published: true },
+    orderBy: { publishDate: "desc" },
+    select: {
+      slug: true,
+      title: true,
+      excerpt: true,
+      imageUrl: true,
+      category: true,
+      publishDate: true,
+    },
+  });
+  const [latestArticle, ...otherArticles] = publishedArticles;
+  const sideArticles = otherArticles.slice(0, 4);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -190,48 +206,122 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Editorial promise */}
-      <section className="border-y border-border bg-secondary/60">
-        <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <p className="eyebrow">The Editorial Promise</p>
-            <h2 className="mt-4 text-5xl">
-              No jargon.<br />
-              <span className="italic">No fear.</span><br />
-              No upsell.
+      {latestArticle ? (
+        <section className="border-y border-border bg-secondary/60">
+          <div className="mx-auto max-w-7xl px-6 py-24">
+            <p className="eyebrow">Latest Guides</p>
+            <h2 className="mt-3 text-5xl md:text-6xl">
+              Recent tax guides and articles.
             </h2>
-          </div>
-          <div className="md:col-span-7">
-            <div className="grid gap-10 sm:grid-cols-2">
-              {[
-                {
-                  k: "Plain English",
-                  v: "Every IRS rule explained at the level of a thoughtful neighbor — not a tax-software ad.",
-                },
-                {
-                  k: "Cited & current",
-                  v: "Coverage is grounded in actual IRS publications, court cases, and the most recent tax-law updates.",
-                },
-                {
-                  k: "Audience first",
-                  v: "We don't sell your taxes. No lead-gen funnels, no affiliate disclaimers buried in footnotes.",
-                },
-                {
-                  k: "Built for the U.S.",
-                  v: "Federal + state interplay, real American filing situations — written by people who file here too.",
-                },
-              ].map((b) => (
-                <div key={b.k}>
-                  <p className="font-display text-2xl text-navy">{b.k}.</p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {b.v}
+
+            <div className="mt-14 grid gap-6 md:grid-cols-12">
+              {/* Featured latest article */}
+              <Link
+                href={`/${latestArticle.category}/${latestArticle.slug}`}
+                className="group relative col-span-12 overflow-hidden rounded-lg border border-border bg-card transition-shadow hover:shadow-2xl md:col-span-7"
+              >
+                {latestArticle.imageUrl ? (
+                  <div className="relative h-56 md:h-72">
+                    <Image
+                      src={latestArticle.imageUrl}
+                      alt={latestArticle.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex h-56 items-center justify-center bg-navy md:h-72">
+                    <span className="font-display text-6xl text-accent">
+                      {categories.find((c) => c.slug === latestArticle.category)?.number ?? "★"}
+                    </span>
+                  </div>
+                )}
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <span className="pill">{categories.find((c) => c.slug === latestArticle.category)?.shortTitle ?? latestArticle.category}</span>
+                    <span>
+                      {new Date(latestArticle.publishDate).toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 font-display text-2xl leading-tight text-navy md:text-3xl">
+                    {latestArticle.title}
+                  </h3>
+                  {latestArticle.excerpt && (
+                    <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                      {latestArticle.excerpt}
+                    </p>
+                  )}
+                  <p className="mt-6 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-accent">
+                    Read the guide
+                    <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
                   </p>
                 </div>
-              ))}
+              </Link>
+
+              {/* Side articles */}
+              <div className="col-span-12 grid gap-px overflow-hidden rounded-lg border border-border bg-border md:col-span-5 md:grid-cols-1">
+                {sideArticles.map((article) => (
+                  <Link
+                    key={article.slug}
+                    href={`/${article.category}/${article.slug}`}
+                    className="group flex items-stretch gap-0 bg-card transition-colors hover:bg-secondary"
+                  >
+                    <div className="relative w-32 shrink-0 overflow-hidden sm:w-40">
+                      {article.imageUrl ? (
+                        <Image
+                          src={article.imageUrl}
+                          alt={article.title}
+                          fill
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center bg-navy">
+                          <span className="font-display text-3xl text-accent">
+                            {categories.find((c) => c.slug === article.category)?.number ?? "★"}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 p-5">
+                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                        <span>{categories.find((c) => c.slug === article.category)?.shortTitle ?? article.category}</span>
+                        <span aria-hidden>·</span>
+                        <span>
+                          {new Date(article.publishDate).toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </span>
+                      </div>
+                      <h3 className="mt-2 font-display text-lg leading-snug text-navy">
+                        {article.title}
+                      </h3>
+                      {article.excerpt && (
+                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                          {article.excerpt}
+                        </p>
+                      )}
+                      <p className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy">
+                        Read the guide
+                        <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </>
   );
 }

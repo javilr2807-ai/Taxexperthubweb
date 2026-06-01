@@ -42,9 +42,6 @@ export function SiteFooter() {
                     href={`/${c.slug}`}
                     className="group flex items-baseline gap-3 text-paper/90 hover:text-accent"
                   >
-                    <span className="text-[11px] tracking-[0.2em] text-paper/40">
-                      {c.number}
-                    </span>
                     <span className="font-display text-lg">{c.shortTitle}</span>
                   </Link>
                 </li>

@@ -144,9 +144,6 @@ export default async function HomePage() {
                 <span className="pill border-paper/30 bg-transparent text-paper/70">
                   Featured Desk
                 </span>
-                <span className="font-display text-6xl text-accent">
-                  {featured.number}
-                </span>
               </div>
               <h3 className="mt-12 font-display text-5xl md:text-6xl">
                 {featured.title}.
@@ -182,9 +179,6 @@ export default async function HomePage() {
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div aria-hidden className="absolute inset-0 bg-navy/30" />
-                  <span className="absolute left-3 top-3 font-display text-3xl text-accent">
-                    {c.number}
-                  </span>
                 </div>
                 <div className="flex-1 p-6">
                   <h3 className="font-display text-2xl text-navy">
@@ -232,7 +226,7 @@ export default async function HomePage() {
                 ) : (
                   <div className="flex h-56 items-center justify-center bg-navy md:h-72">
                     <span className="font-display text-6xl text-accent">
-                      {categories.find((c) => c.slug === latestArticle.category)?.number ?? "★"}
+                      ★
                     </span>
                   </div>
                 )}
@@ -283,7 +277,7 @@ export default async function HomePage() {
                       ) : (
                         <div className="flex h-full items-center justify-center bg-navy">
                           <span className="font-display text-3xl text-accent">
-                            {categories.find((c) => c.slug === article.category)?.number ?? "★"}
+                            ★
                           </span>
                         </div>
                       )}

@@ -37,11 +37,7 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
             backgroundSize: "22px 22px",
           }}
         />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-20 md:grid-cols-12 md:py-28">
-          <div className="md:col-span-2">
-            <p className="font-display text-7xl text-accent">{category.number}</p>
-          </div>
-          <div className="md:col-span-10">
+        <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
             <p className="eyebrow text-paper/60">The {category.shortTitle} Desk</p>
             <h1 className="mt-4 max-w-4xl text-5xl md:text-7xl">
               {category.title}.
@@ -55,7 +51,6 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
             <p className="mt-8 text-[11px] uppercase tracking-[0.22em] text-paper/50">
               Who this is for · {category.audience}
             </p>
-          </div>
         </div>
       </section>
 
@@ -126,9 +121,6 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
               href={`/${c.slug}`}
               className="group bg-card p-8 transition-colors hover:bg-navy hover:text-paper"
             >
-              <p className="text-[11px] tracking-[0.22em] text-muted-foreground group-hover:text-paper/60">
-                {c.number}
-              </p>
               <p className="mt-4 font-display text-3xl">{c.shortTitle}</p>
               <p className="mt-3 text-sm text-muted-foreground group-hover:text-paper/70">
                 {c.tagline}

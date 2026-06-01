@@ -24,9 +24,6 @@ export function SiteHeader() {
                 pathname === `/${c.slug}` ? "text-navy brass-underline" : ""
               }`}
             >
-              <span className="mr-1.5 text-[10px] font-semibold tracking-[0.2em] text-muted-foreground">
-                {c.number}
-              </span>
               {c.shortTitle}
             </Link>
           ))}

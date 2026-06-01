@@ -9,21 +9,29 @@ export const metadata: Metadata = {
   title: `${cat.title} — Tax Experts Hub`,
   description: cat.description,
   alternates: {
-    canonical: `https://taxexpertshub.com/personal-income-tax`,
+    canonical: `https://taxexpertshub.com/${cat.slug}`,
   },
   openGraph: {
     title: `${cat.title} — Tax Experts Hub`,
     description: cat.description,
-    url: `https://taxexpertshub.com/personal-income-tax`,
+    url: `https://taxexpertshub.com/${cat.slug}`,
     type: "article",
   },
 };
 
-export default async function Page() {
+export const dynamic = "force-dynamic";
+
+export default async function PersonalIncomeTaxPage() {
   const articles = await prisma.article.findMany({
     where: { category: "personal-income-tax", published: true },
     orderBy: { publishDate: "desc" },
-    select: { slug: true, title: true, excerpt: true, imageUrl: true, publishDate: true },
+    select: {
+      slug: true,
+      title: true,
+      excerpt: true,
+      imageUrl: true,
+      publishDate: true,
+    },
   });
 
   return <CategoryPage category={cat} articles={articles} />;

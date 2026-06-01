@@ -107,9 +107,9 @@ export default async function HomePage() {
         <div className="flex items-end justify-between gap-6">
           <div>
             <p className="eyebrow">The Four Desks</p>
-            <h2 className="mt-3 text-5xl md:text-6xl">
-              Where every American tax question lives.
-            </h2>
+              <h2 className="mt-3 text-4xl leading-[1.08] sm:text-5xl md:text-6xl">
+                Where every American tax question lives.
+              </h2>
           </div>
           <p className="hidden max-w-xs text-sm text-muted-foreground md:block">
             Pick the desk that fits your situation. Each one is editorially
@@ -121,7 +121,7 @@ export default async function HomePage() {
           {/* Featured */}
           <Link
             href={`/${featured.slug}`}
-            className="group relative col-span-12 overflow-hidden rounded-lg border border-border bg-navy p-10 text-paper transition-shadow hover:shadow-2xl md:col-span-7 md:p-14"
+            className="group relative col-span-12 overflow-hidden rounded-lg border border-border bg-navy p-6 text-paper transition-shadow hover:shadow-2xl md:col-span-7 md:p-14"
           >
             <Image
               src={featured.image}
@@ -145,13 +145,13 @@ export default async function HomePage() {
                   Featured Desk
                 </span>
               </div>
-              <h3 className="mt-12 font-display text-5xl md:text-6xl">
+              <h3 className="mt-8 font-display text-3xl leading-[1.08] sm:text-4xl md:text-5xl lg:text-6xl">
                 {featured.title}.
               </h3>
-              <p className="mt-4 max-w-xl font-display text-2xl italic text-paper/80">
+              <p className="mt-3 max-w-xl font-display text-lg italic text-paper/80 sm:text-xl md:text-2xl">
                 {featured.tagline}
               </p>
-              <p className="mt-8 max-w-xl text-sm leading-relaxed text-paper/70">
+              <p className="mt-6 max-w-xl text-sm leading-relaxed text-paper/70">
                 {featured.description}
               </p>
               <p className="mt-12 inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-accent">
@@ -180,14 +180,14 @@ export default async function HomePage() {
                   />
                   <div aria-hidden className="absolute inset-0 bg-navy/30" />
                 </div>
-                <div className="flex-1 p-6">
-                  <h3 className="font-display text-2xl text-navy">
+                <div className="flex-1 p-4 sm:p-6">
+                  <h3 className="font-display text-lg text-navy sm:text-2xl">
                     {c.shortTitle}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm sm:mt-2">
                     {c.tagline}
                   </p>
-                  <p className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy">
+                  <p className="mt-2 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy sm:mt-4">
                     Read the desk
                     <span aria-hidden className="transition-transform group-hover:translate-x-1">
                       →
@@ -204,7 +204,7 @@ export default async function HomePage() {
         <section className="border-y border-border bg-secondary/60">
           <div className="mx-auto max-w-7xl px-6 py-24">
             <p className="eyebrow">Latest Guides</p>
-            <h2 className="mt-3 text-5xl md:text-6xl">
+            <h2 className="mt-3 text-4xl leading-[1.08] sm:text-5xl md:text-6xl">
               Recent tax guides and articles.
             </h2>
 

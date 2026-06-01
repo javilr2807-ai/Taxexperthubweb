@@ -59,123 +59,61 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
         </div>
       </section>
 
-      {/* Topics grid */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="flex items-end justify-between gap-6">
-          <div>
-            <p className="eyebrow">What we cover</p>
-            <h2 className="mt-3 text-4xl md:text-5xl">The essentials.</h2>
-          </div>
-          <p className="hidden max-w-xs text-sm text-muted-foreground md:block">
-            Six pillars. Every article on this desk maps to one.
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-3">
-          {category.topics.map((t, i) => (
-            <div
-              key={t.title}
-              className="group relative bg-card p-8 transition-colors hover:bg-secondary"
-            >
-              <p className="text-[11px] font-semibold tracking-[0.22em] text-muted-foreground">
-                {String(i + 1).padStart(2, "0")}
-              </p>
-              <h3 className="mt-4 font-display text-2xl text-navy">{t.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {t.blurb}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Articles */}
-      {articles.length > 0 && (
-        <section className="mx-auto max-w-7xl px-6 py-24">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <p className="eyebrow">Latest articles</p>
-              <h2 className="mt-3 text-4xl md:text-5xl">The latest.</h2>
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        {articles.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-lg text-muted-foreground">
+              No articles found in this category.
+            </p>
+          </div>
+        ) : (
+          <div>
+            <div className="flex items-end justify-between gap-6">
+              <div>
+                <p className="eyebrow">Latest articles</p>
+                <h2 className="mt-3 text-4xl md:text-5xl">The latest.</h2>
+              </div>
+            </div>
+
+            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {articles.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/${category.slug}/${a.slug}`}
+                  className="group rounded-lg border border-border bg-card overflow-hidden transition-shadow hover:shadow-lg"
+                >
+                  {a.imageUrl && (
+                    <div className="aspect-video relative overflow-hidden">
+                      <img
+                        src={a.imageUrl}
+                        alt={a.title}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                  <div className="p-5">
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(a.publishDate).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </p>
+                    <h3 className="mt-2 font-display text-xl text-navy group-hover:text-brass transition-colors">
+                      {a.title}
+                    </h3>
+                    {a.excerpt && (
+                      <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
+                        {a.excerpt}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
-
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((a) => (
-              <Link
-                key={a.slug}
-                href={`/${category.slug}/${a.slug}`}
-                className="group rounded-lg border border-border bg-card overflow-hidden transition-shadow hover:shadow-lg"
-              >
-                {a.imageUrl && (
-                  <div className="aspect-video relative overflow-hidden">
-                    <img
-                      src={a.imageUrl}
-                      alt={a.title}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                )}
-                <div className="p-5">
-                  <p className="text-xs text-muted-foreground">
-                    {new Date(a.publishDate).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-                  <h3 className="mt-2 font-display text-xl text-navy group-hover:text-brass transition-colors">
-                    {a.title}
-                  </h3>
-                  {a.excerpt && (
-                    <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
-                      {a.excerpt}
-                    </p>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Forms + Questions split */}
-      <section className="border-y border-border bg-secondary/60">
-        <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 md:grid-cols-12">
-          <div className="md:col-span-5">
-            <p className="eyebrow">Forms you'll meet</p>
-            <h2 className="mt-3 text-4xl">The paperwork.</h2>
-            <ul className="mt-8 divide-y divide-border border-y border-border">
-              {category.forms.map((f) => (
-                <li
-                  key={f}
-                  className="flex items-baseline justify-between py-4 font-display text-2xl text-navy"
-                >
-                  <span>{f}</span>
-                  <span className="text-[11px] tracking-[0.22em] text-muted-foreground">
-                    IRS
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="md:col-span-7">
-            <p className="eyebrow">Questions we hear most</p>
-            <h2 className="mt-3 text-4xl">Asked. Answered.</h2>
-            <ol className="mt-8 space-y-6">
-              {category.questions.map((q, i) => (
-                <li key={q} className="flex gap-6 border-b border-border pb-6">
-                  <span className="font-display text-3xl italic text-accent">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="font-display text-2xl leading-snug text-navy">
-                    {q}
-                  </p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
+        )}
       </section>
 
       {/* Other desks */}

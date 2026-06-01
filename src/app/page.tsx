@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { categories } from "@/lib/categories";
 import heroHome from "@/assets/hero-home.jpg";
-import { NewsletterForm } from "@/components/site/NewsletterForm";
+
 
 export const metadata: Metadata = {
   title: "Tax Experts Hub — U.S. Tax Journalism in Plain English",
@@ -251,23 +251,6 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA strip */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="flex flex-col items-start justify-between gap-8 border-t border-border pt-12 md:flex-row md:items-end">
-          <div>
-            <p className="eyebrow">Next issue</p>
-            <h2 className="mt-3 max-w-2xl text-5xl">
-              Filing season briefings, in your inbox.
-            </h2>
-            <p className="mt-4 max-w-xl text-sm text-muted-foreground">
-              One weekly dispatch from each desk. No spam. Unsubscribe with one
-              click.
-            </p>
-          </div>
-          <NewsletterForm />
         </div>
       </section>
     </>

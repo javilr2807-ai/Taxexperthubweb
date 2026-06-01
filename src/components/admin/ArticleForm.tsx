@@ -87,9 +87,11 @@ export function ArticleForm({ article }: { article?: any }) {
   };
 
   return (
-    <form action={saveArticle} className="max-w-3xl mx-auto space-y-6">
+    <form action={saveArticle} className="max-w-3xl mx-auto">
       {article?.id && <input type="hidden" name="id" value={article.id} />}
       <input type="hidden" name="published" value={published ? 'true' : 'false'} />
+
+      <div className="rounded-xl border border-border bg-card p-8 space-y-6">
 
       <div className="space-y-2">
         <Label htmlFor="title">Article Title</Label>
@@ -218,6 +220,7 @@ export function ArticleForm({ article }: { article?: any }) {
           )}
           <SubmitButton />
         </div>
+      </div>
       </div>
     </form>
   );

@@ -170,9 +170,9 @@ export default async function HomePage() {
                 <Link
                   key={c.slug}
                   href={`/${c.slug}`}
-                  className="group flex items-stretch gap-0 bg-card transition-colors hover:bg-secondary"
+                  className="group flex flex-col items-stretch gap-0 bg-card transition-colors hover:bg-secondary sm:flex-row"
                 >
-                  <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-40">
+                  <div className="relative w-full shrink-0 overflow-hidden aspect-[3/1] sm:aspect-auto sm:w-32 lg:w-40">
                     <Image
                       src={c.image}
                       alt={c.imageAlt}
@@ -267,9 +267,9 @@ export default async function HomePage() {
                     <Link
                       key={article.slug}
                       href={`/${article.category}/${article.slug}`}
-                      className="group flex items-stretch gap-0 bg-card transition-colors hover:bg-secondary"
+                      className="group flex flex-col items-stretch gap-0 bg-card transition-colors hover:bg-secondary sm:flex-row"
                     >
-                      <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-40">
+                      <div className="relative w-full shrink-0 overflow-hidden aspect-[3/1] sm:aspect-auto sm:w-32 lg:w-40">
                         {article.imageUrl ? (
                           <Image
                             src={article.imageUrl}

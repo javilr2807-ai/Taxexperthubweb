@@ -77,7 +77,7 @@ export default function AboutPage() {
             <div className="md:col-span-5">
               <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-border">
                 <Image
-                  src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80"
+                  src="/images/james-carrington.png"
                   alt="James Carrington, Editor-in-Chief of Tax Experts Hub"
                   fill
                   className="object-cover"

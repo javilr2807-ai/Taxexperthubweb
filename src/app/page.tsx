@@ -207,10 +207,13 @@ export default async function HomePage() {
       {latestArticle ? (
         <section className="border-y border-border bg-secondary/60">
           <div className="mx-auto max-w-7xl px-6 py-24">
-            <p className="eyebrow">Latest Guides</p>
-            <h2 className="mt-3 text-5xl md:text-6xl">
-              Recent tax guides and articles.
+            <p className="eyebrow" style={{ fontSize: "14px", letterSpacing: "0.12em" }}>LATEST ARTICLES</p>
+            <h2 className="mt-3 font-bold text-3xl md:text-4xl lg:text-5xl">
+              Latest Tax Questions & Answers
             </h2>
+            <p className="mt-4 max-w-[700px] text-lg text-muted-foreground">
+              Expert explanations, tax guides, IRS updates, and practical answers for everyday Americans.
+            </p>
 
             <div className="mt-14 grid gap-6 md:grid-cols-12">
               {/* Featured latest article */}

@@ -66,8 +66,13 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
           <div>
             <div className="flex items-end justify-between gap-6">
               <div>
-                <p className="eyebrow">Latest articles</p>
-                <h2 className="mt-3 text-4xl md:text-5xl">The latest.</h2>
+                <p className="eyebrow" style={{ fontSize: "14px", letterSpacing: "0.12em" }}>{category.shortTitle.toUpperCase()}</p>
+                <h2 className="mt-3 font-bold text-3xl md:text-4xl lg:text-5xl">
+                  {articles.length} {articles.length === 1 ? "Article" : "Articles"}
+                </h2>
+                <p className="mt-2 max-w-[700px] text-base text-muted-foreground">
+                  {category.description}
+                </p>
               </div>
             </div>
 

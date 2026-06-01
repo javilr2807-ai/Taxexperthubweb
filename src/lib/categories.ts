@@ -25,11 +25,11 @@ export const categories: Category[] = [
     slug: "personal-income-tax",
     number: "01",
     shortTitle: "Personal Income Tax",
-    title: "Personal Income Tax",
-    tagline: "Filing Form 1040, with confidence.",
+    title: "Personal Income Tax Guides",
+    tagline: "IRS Forms, Tax Credits, Deductions & Filing Requirements",
     description:
-      "Built for the average American taxpayer and families. Plain-English answers on annual filing, credits for children and dependents, standard vs. itemized deductions, and the tax impact of life events — marriage, divorce, inheritance, even a lottery win.",
-    audience: "Individuals, married couples, parents, retirees.",
+      "Learn how federal income taxes work in the United States. Explore Form 1040 filing requirements, tax brackets, deductions, credits, refunds, dependent rules, filing status options, and common IRS questions for individuals and families.",
+    audience: "Individuals, families, parents, retirees, first-time filers",
     image: catPersonal,
     imageAlt: "American family kitchen table with tax paperwork at golden hour.",
     topics: [
@@ -52,11 +52,11 @@ export const categories: Category[] = [
     slug: "freelancer-small-business",
     number: "02",
     shortTitle: "Freelancer & Small Business",
-    title: "Freelancer & Small Business Taxes",
-    tagline: "The tax desk for the gig economy and Main Street.",
+    title: "Self-Employment & Small Business Taxes",
+    tagline: "1099 Income, Business Deductions & IRS Compliance",
     description:
-      "For Uber and Lyft drivers, creators, Shopify and Amazon sellers, independent freelancers, and LLC owners. Learn to deduct the home office, vehicle mileage, and software stack; file Schedule C and Form 1099-NEC; and stay current on quarterly estimated taxes.",
-    audience: "Self-employed, 1099 contractors, LLC owners, e-commerce sellers.",
+      "Practical tax guidance for freelancers, contractors, LLC owners, creators, consultants, and small businesses. Learn about Schedule C, quarterly estimated taxes, business expenses, deductions, bookkeeping, and IRS filing obligations.",
+    audience: "Freelancers, 1099 contractors, LLC owners, creators, small business operators",
     image: catFreelancer,
     imageAlt: "Freelancer's home office desk with laptop and brass lamp at dusk.",
     topics: [
@@ -78,12 +78,12 @@ export const categories: Category[] = [
   {
     slug: "crypto-investment",
     number: "03",
-    shortTitle: "Crypto & Investments",
-    title: "Crypto & Investment Taxes",
-    tagline: "The IRS plays your portfolio. Know the rules.",
+    shortTitle: "Crypto & Investment Tax",
+    title: "Crypto & Investment Tax Guides",
+    tagline: "Capital Gains, Cryptocurrency Reporting & Tax Planning",
     description:
-      "Written for retail investors trading equities and crypto. Understand short-term vs. long-term capital gains, harvest losses to cut your bill, navigate the wash-sale rule, and decode the tax treatment of dividends, staking rewards, NFTs, and retirement accounts.",
-    audience: "Retail traders, crypto holders, dividend investors, 401(k) and IRA savers.",
+      "Understand how taxes apply to stocks, ETFs, dividends, retirement accounts, cryptocurrency transactions, staking rewards, NFTs, and digital assets. Learn how capital gains taxes work and how to stay compliant with IRS reporting requirements.",
+    audience: "Investors, crypto holders, traders, retirement savers, long-term investors",
     image: catCrypto,
     imageAlt: "Abstract brass candlestick chart on a deep navy background.",
     topics: [
@@ -106,11 +106,11 @@ export const categories: Category[] = [
     slug: "tax-relief-audits",
     number: "04",
     shortTitle: "Tax Relief & Audits",
-    title: "Tax Relief & Audits",
-    tagline: "When the IRS writes you. Don't panic. Open the letter.",
+    title: "IRS Notices, Audits & Tax Relief",
+    tagline: "CP2000 Notices, Payment Plans & Audit Guidance",
     description:
-      "The triage desk for taxpayers in trouble. What to do when a CP2000 or Letter 12C lands in the mailbox, how to set up an Online Payment Agreement, when penalty abatement is on the table, and how wage garnishments and liens actually work.",
-    audience: "Anyone who owes the IRS, missed a filing, or received a notice.",
+      "Learn how to respond to IRS notices, understand audit procedures, request payment plans, resolve penalties, handle tax debt, and navigate common tax relief programs available to U.S. taxpayers.",
+    audience: "Taxpayers with IRS notices, tax debt, audits, penalties or payment issues",
     image: catRelief,
     imageAlt: "Unopened official government envelope under a single warm beam of light.",
     topics: [

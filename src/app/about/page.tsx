@@ -3,11 +3,11 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About — Tax Experts Hub",
-  description: "Learn about Tax Experts Hub, our mission to make U.S. taxes understandable, and the team behind the coverage.",
+  description: "Tax Experts Hub is an independent educational publication covering U.S. tax topics, IRS procedures, and personal finance for everyday readers.",
   alternates: { canonical: "https://taxexpertshub.com/about" },
   openGraph: {
     title: "About — Tax Experts Hub",
-    description: "Learn about Tax Experts Hub, our mission to make U.S. taxes understandable, and the team behind the coverage.",
+    description: "Tax Experts Hub is an independent educational publication covering U.S. tax topics, IRS procedures, and personal finance for everyday readers.",
     url: "https://taxexpertshub.com/about",
   },
 };
@@ -25,21 +25,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Our Mission */}
       <section className="mx-auto max-w-3xl px-6 py-20 md:py-28">
         <h2 className="font-display text-3xl text-navy md:text-4xl">Our Mission</h2>
         <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-          Tax Experts Hub was founded with a single goal: to make U.S. tax rules
-          accessible to the people who actually have to follow them. Every article
-          is written in plain English, grounded in IRS publications and tax law,
-          and free of affiliate links, lead-gen funnels, and financial-product
-          placement.
+          Tax Experts Hub exists to make U.S. tax topics easier to understand.
         </p>
         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-          We cover four editorial desks — Personal Income Tax, Freelancer &amp;
-          Small Business, Crypto &amp; Investment Taxes, and Tax Relief &amp;
-          Audits — each one staffed by journalists who specialize in making
-          complex regulations readable. No jargon. No fear. No upsell.
+          We publish educational articles, guides, and explainers covering federal
+          tax rules, IRS procedures, tax credits, deductions, filing requirements,
+          and related financial topics. Our goal is to help readers better understand
+          complex tax concepts through clear, accessible content written in plain English.
+        </p>
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          Tax Experts Hub is an independent educational publication. We do not provide
+          tax preparation services, accounting services, legal representation, or
+          personalized tax advice.
         </p>
 
         <div className="mt-16 grid gap-12 sm:grid-cols-2">
@@ -53,13 +54,13 @@ export default function AboutPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
               Coverage
             </p>
-            <p className="mt-2 font-display text-2xl text-navy">U.S. Tax Law &amp; IRS</p>
+            <p className="mt-2 font-display text-2xl text-navy">U.S. Taxes, IRS Topics &amp; Personal Finance Education</p>
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
-              Readers
+              Audience
             </p>
-            <p className="mt-2 font-display text-2xl text-navy">Taxpayers, Freelancers, Investors</p>
+            <p className="mt-2 font-display text-2xl text-navy">Individuals, Freelancers, Small Business Owners &amp; Investors</p>
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
@@ -70,7 +71,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Editor */}
+      {/* Editorial Team */}
       <section className="border-y border-border bg-secondary/60">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="grid gap-12 md:grid-cols-12">
@@ -78,40 +79,32 @@ export default function AboutPage() {
               <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-border">
                 <Image
                   src="/images/james-carrington.png"
-                  alt="James Carrington, Editor-in-Chief of Tax Experts Hub"
+                  alt="Tax Experts Hub editorial team"
                   fill
                   className="object-cover"
                 />
               </div>
             </div>
             <div className="md:col-span-7">
-              <p className="eyebrow">Editor-in-Chief</p>
-              <h2 className="mt-3 font-display text-4xl text-navy md:text-5xl">
-                James Carrington
+              <p className="eyebrow">About the Editorial Team</p>
+              <h2 className="mt-3 font-display text-3xl text-navy md:text-4xl">
+                Editorial Team
               </h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Editor-in-Chief &amp; Founder
-              </p>
               <div className="mt-8 space-y-4 text-base leading-relaxed text-muted-foreground">
                 <p>
-                  James Carrington is a tax journalist and former CPA with over
-                  twelve years of experience in tax preparation and financial
-                  journalism. He founded Tax Experts Hub after years of watching
-                  taxpayers struggle with confusing IRS forms and misleading
-                  online advice.
+                  Tax Experts Hub is maintained by a small editorial team focused on
+                  researching, organizing, and explaining tax-related topics for
+                  everyday readers.
                 </p>
                 <p>
-                  A graduate of the University of Virginia with a degree in
-                  Accounting, James spent eight years at a mid-sized CPA firm
-                  in Richmond, Virginia, where he specialized in individual and
-                  small-business tax preparation. He has been quoted in financial
-                  publications on matters of IRS compliance, tax reform, and
-                  digital-asset reporting.
+                  Our content is created using publicly available sources, including
+                  IRS publications, official government guidance, court decisions, and
+                  educational reference materials. Articles are reviewed and updated
+                  periodically to improve clarity, accuracy, and relevance.
                 </p>
                 <p>
-                  James lives in Richmond, Virginia, with his family. He believes
-                  that understanding your taxes should not require a law degree
-                  — and that clear, honest journalism is the best tool for the job.
+                  We believe tax information should be understandable without requiring
+                  specialized knowledge or technical training.
                 </p>
               </div>
             </div>
@@ -119,37 +112,87 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Editorial principles */}
-      <section className="mx-auto max-w-7xl px-6 py-20 md:py-28">
-        <p className="eyebrow">Our Principles</p>
-        <h2 className="mt-3 text-4xl text-navy md:text-5xl">
-          How we cover taxes.
+      {/* Editorial Approach */}
+      <section className="mx-auto max-w-3xl px-6 py-20 md:py-28">
+        <p className="eyebrow">Editorial Approach</p>
+        <h2 className="mt-3 font-display text-3xl text-navy md:text-4xl">
+          How We Create Content
         </h2>
-        <div className="mt-12 grid gap-10 sm:grid-cols-3">
+        <div className="mt-10 grid gap-10 sm:grid-cols-3">
           <div>
-            <p className="font-display text-3xl text-accent">01</p>
-            <p className="mt-4 font-display text-xl text-navy">Independent</p>
+            <p className="font-display text-xl text-accent">Research First</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              No sponsored content, no affiliate links, no advertising influence.
-              Our only obligation is to the reader.
+              Articles are developed using publicly available government resources,
+              official IRS materials, and educational reference sources whenever
+              applicable.
             </p>
           </div>
           <div>
-            <p className="font-display text-3xl text-accent">02</p>
-            <p className="mt-4 font-display text-xl text-navy">Accurate</p>
+            <p className="font-display text-xl text-accent">Clarity Matters</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Every piece is grounded in primary sources — IRS publications,
-              tax code sections, court rulings, and official guidance.
+              Complex tax topics are rewritten into straightforward language
+              designed for non-specialist readers.
             </p>
           </div>
           <div>
-            <p className="font-display text-3xl text-accent">03</p>
-            <p className="mt-4 font-display text-xl text-navy">Readable</p>
+            <p className="font-display text-xl text-accent">Regular Updates</p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              We translate tax rules into clear, conversational English.
-              If a sentence needs a footnote, it needs a rewrite.
+              Content may be revised periodically to reflect regulatory changes,
+              updated guidance, or improvements in accuracy and readability.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Principles */}
+      <section className="border-y border-border bg-secondary/60">
+        <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+          <p className="eyebrow">Our Principles</p>
+          <h2 className="mt-3 text-3xl text-navy md:text-4xl">
+            How we approach tax education.
+          </h2>
+          <div className="mt-12 grid gap-10 sm:grid-cols-3">
+            <div>
+              <p className="font-display text-3xl text-accent">01</p>
+              <p className="mt-4 font-display text-xl text-navy">Independent</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Our content is created for informational and educational purposes.
+                We aim to provide clear explanations without unnecessary complexity.
+              </p>
+            </div>
+            <div>
+              <p className="font-display text-3xl text-accent">02</p>
+              <p className="mt-4 font-display text-xl text-navy">Accessible</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Tax topics can be difficult to understand. We focus on making
+                information easier to follow for everyday readers.
+              </p>
+            </div>
+            <div>
+              <p className="font-display text-3xl text-accent">03</p>
+              <p className="mt-4 font-display text-xl text-navy">Educational</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                Tax Experts Hub is an educational publication designed to help
+                readers learn about tax-related topics and public guidance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Important Notice */}
+      <section className="mx-auto max-w-3xl px-6 py-20 md:py-28">
+        <div className="rounded-lg border border-border bg-card p-8">
+          <p className="eyebrow">Important Notice</p>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            Tax Experts Hub is an informational website only.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            The content published on this website does not constitute tax, legal,
+            accounting, or financial advice. Readers should consult qualified
+            professionals regarding their specific circumstances before making tax
+            or financial decisions.
+          </p>
         </div>
       </section>
     </>

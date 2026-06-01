@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { categories } from "@/lib/categories";
 
+const legalLinks = [
+  { href: "/privacy-policy", label: "Privacy Policy" },
+  { href: "/terms-of-service", label: "Terms of Service" },
+  { href: "/cookie-policy", label: "Cookie Policy" },
+  { href: "/legal-notice", label: "Legal Notice" },
+] as const;
+
 export function SiteFooter() {
   return (
     <footer className="mt-32 border-t border-border bg-navy text-paper">
@@ -13,6 +20,11 @@ export function SiteFooter() {
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-paper/70">
               Plain-English U.S. tax journalism for taxpayers, freelancers,
               investors, and anyone holding an IRS notice they don't understand.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-paper/50">
+              Editorial guidance only. Nothing here is legal or tax advice.
+              For your specific situation, consult a licensed CPA, EA, or tax
+              attorney.
             </p>
             <p className="mt-8 text-[11px] uppercase tracking-[0.2em] text-paper/50">
               taxexpertshub.com · United States
@@ -42,13 +54,20 @@ export function SiteFooter() {
 
           <div className="md:col-span-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-paper/50">
-              The Fine Print
+              Legal
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-paper/70">
-              Editorial guidance only. Nothing here is legal or tax advice.
-              For your specific situation, consult a licensed CPA, EA, or tax
-              attorney.
-            </p>
+            <ul className="mt-4 space-y-3">
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-paper/90 hover:text-accent transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

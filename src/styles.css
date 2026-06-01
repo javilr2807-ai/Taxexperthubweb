@@ -535,7 +535,6 @@
   /* ── Tables ── */
   .table-wrapper {
     width: 100%;
-    overflow-x: auto;
     margin: 2rem 0;
     border: 1px solid #e5e7eb;
     border-radius: 16px;
@@ -544,30 +543,60 @@
 
   .table-wrapper table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
-    font-size: 0.9rem;
+  }
+
+  .table-wrapper th,
+  .table-wrapper td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    padding: 20px 24px;
   }
 
   .table-wrapper th {
     background: var(--navy);
     color: var(--paper);
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 15px;
+    line-height: 1.35;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     text-align: left;
-    padding: 1rem 1.25rem;
-    white-space: nowrap;
   }
 
   .table-wrapper td {
-    padding: 1rem 1.25rem;
     border-top: 1px solid var(--border);
     color: var(--foreground);
   }
 
   .table-wrapper tbody tr:hover {
     background: var(--secondary);
+  }
+
+  @media (max-width: 1024px) {
+    .table-wrapper th,
+    .table-wrapper td {
+      padding: 16px;
+    }
+    .table-wrapper th {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .table-wrapper {
+      overflow-x: auto;
+    }
+    .table-wrapper th,
+    .table-wrapper td {
+      padding: 14px 12px;
+      font-size: 14px;
+    }
+    .table-wrapper th {
+      font-size: 13px;
+    }
   }
 
   .source-note {

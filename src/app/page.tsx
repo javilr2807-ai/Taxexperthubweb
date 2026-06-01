@@ -103,9 +103,9 @@ export default async function HomePage() {
       </section>
 
       {/* Featured + grid */}
-      <section className="mx-auto w-full max-w-7xl overflow-hidden px-6 py-16 sm:py-24">
-        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-          <div className="w-full sm:w-auto">
+      <section className="mx-auto max-w-7xl overflow-hidden px-6 py-24">
+        <div className="flex items-end justify-between gap-6">
+          <div>
             <p className="eyebrow">The Four Desks</p>
             <h2 className="mt-3 text-3xl leading-[1.1] sm:text-4xl md:text-5xl lg:text-6xl">
               Where every American tax question lives.
@@ -117,17 +117,17 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div className="mt-10 flex flex-col gap-6 sm:mt-14 sm:grid sm:grid-cols-12 sm:gap-12">
+        <div className="mt-10 grid gap-8 md:grid-cols-12 md:gap-12">
           {/* Featured */}
           <Link
             href={`/${featured.slug}`}
-            className="relative w-full overflow-hidden rounded-lg border border-border bg-navy p-6 text-paper transition-shadow hover:shadow-2xl sm:col-span-7 sm:p-14"
+            className="group relative col-span-12 min-w-0 overflow-hidden rounded-lg border border-border bg-navy p-6 text-paper transition-shadow hover:shadow-2xl md:col-span-7 md:p-14"
           >
             <Image
               src={featured.image}
               alt={featured.imageAlt}
               fill
-              className="absolute inset-0 object-cover opacity-35 transition-opacity duration-500 group-hover:opacity-50"
+              className="absolute inset-0 h-full w-full object-cover opacity-35 transition-opacity duration-500 group-hover:opacity-50"
             />
             <div aria-hidden className="absolute inset-0 bg-gradient-to-tr from-navy via-navy/80 to-navy/30" />
             <div
@@ -139,11 +139,13 @@ export default async function HomePage() {
                 backgroundSize: "20px 20px",
               }}
             />
-            <div className="relative flex flex-col">
-              <span className="pill w-fit border-paper/30 bg-transparent text-paper/70">
-                Featured Desk
-              </span>
-              <h3 className="mt-6 font-display text-2xl leading-[1.08] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <div className="relative flex h-full flex-col">
+              <div className="flex items-center justify-between">
+                <span className="pill border-paper/30 bg-transparent text-paper/70">
+                  Featured Desk
+                </span>
+              </div>
+              <h3 className="mt-8 font-display text-2xl leading-[1.08] sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
                 {featured.title}.
               </h3>
               <p className="mt-2 max-w-xl font-display text-base italic text-paper/80 sm:mt-3 sm:text-lg md:text-xl lg:text-2xl">
@@ -162,38 +164,40 @@ export default async function HomePage() {
           </Link>
 
           {/* Side stack */}
-          <div className="col-span-12 flex flex-col gap-px overflow-hidden rounded-lg border border-border bg-border sm:col-span-5">
-            {rest.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/${c.slug}`}
-                className="group flex flex-col bg-card transition-colors hover:bg-secondary sm:flex-row sm:items-stretch"
-              >
-                <div className="relative aspect-video w-full overflow-hidden sm:aspect-auto sm:h-auto sm:w-32 sm:shrink-0 lg:w-40">
-                  <Image
-                    src={c.image}
-                    alt={c.imageAlt}
-                    fill
-                    className="absolute inset-0 object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div aria-hidden className="absolute inset-0 bg-navy/30" />
-                </div>
-                <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-6">
-                  <h3 className="font-display text-lg text-navy sm:text-xl lg:text-2xl">
-                    {c.shortTitle}
-                  </h3>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:text-sm">
-                    {c.tagline}
-                  </p>
-                  <p className="mt-2 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy sm:mt-4">
-                    Read the desk
-                    <span aria-hidden className="transition-transform group-hover:translate-x-1">
-                      →
-                    </span>
-                  </p>
-                </div>
-              </Link>
-            ))}
+          <div className="col-span-12 min-w-0 overflow-hidden rounded-lg border border-border bg-border md:col-span-5">
+            <div className="flex flex-col gap-px">
+              {rest.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/${c.slug}`}
+                  className="group flex items-stretch gap-0 bg-card transition-colors hover:bg-secondary"
+                >
+                  <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-40">
+                    <Image
+                      src={c.image}
+                      alt={c.imageAlt}
+                      fill
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div aria-hidden className="absolute inset-0 bg-navy/30" />
+                  </div>
+                  <div className="flex min-w-0 flex-1 flex-col justify-center p-4 sm:p-6">
+                    <h3 className="font-display text-base text-navy sm:text-lg lg:text-2xl">
+                      {c.shortTitle}
+                    </h3>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:text-sm">
+                      {c.tagline}
+                    </p>
+                    <p className="mt-2 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy sm:mt-4">
+                      Read the desk
+                      <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                        →
+                      </span>
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -202,7 +206,7 @@ export default async function HomePage() {
         <section className="border-y border-border bg-secondary/60">
           <div className="mx-auto max-w-7xl px-6 py-24">
             <p className="eyebrow">Latest Guides</p>
-            <h2 className="mt-3 text-4xl leading-[1.08] sm:text-5xl md:text-6xl">
+            <h2 className="mt-3 text-5xl md:text-6xl">
               Recent tax guides and articles.
             </h2>
 
@@ -257,58 +261,60 @@ export default async function HomePage() {
               </Link>
 
               {/* Side articles */}
-              <div className="col-span-12 flex flex-col gap-px overflow-hidden rounded-lg border border-border bg-border sm:col-span-5 sm:grid">
-                {sideArticles.map((article) => (
-                  <Link
-                    key={article.slug}
-                    href={`/${article.category}/${article.slug}`}
-                    className="group flex flex-col bg-card transition-colors hover:bg-secondary sm:flex-row sm:items-stretch"
-                  >
-                    <div className="relative aspect-video w-full overflow-hidden sm:aspect-auto sm:h-auto sm:w-32 sm:shrink-0 lg:w-40">
-                      {article.imageUrl ? (
-                        <Image
-                          src={article.imageUrl}
-                          alt={article.title}
-                          fill
-                          className="absolute inset-0 object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="flex h-full items-center justify-center bg-navy">
-                          <span className="font-display text-3xl text-accent">
-                            ★
+              <div className="col-span-12 min-w-0 overflow-hidden rounded-lg border border-border bg-border md:col-span-5">
+                <div className="flex flex-col gap-px">
+                  {sideArticles.map((article) => (
+                    <Link
+                      key={article.slug}
+                      href={`/${article.category}/${article.slug}`}
+                      className="group flex items-stretch gap-0 bg-card transition-colors hover:bg-secondary"
+                    >
+                      <div className="relative w-28 shrink-0 overflow-hidden sm:w-32 lg:w-40">
+                        {article.imageUrl ? (
+                          <Image
+                            src={article.imageUrl}
+                            alt={article.title}
+                            fill
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="flex h-full items-center justify-center bg-navy">
+                            <span className="font-display text-3xl text-accent">
+                              ★
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex min-w-0 flex-1 flex-col justify-center p-4 sm:p-5">
+                        <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                          <span>{categories.find((c) => c.slug === article.category)?.shortTitle ?? article.category}</span>
+                          <span aria-hidden>·</span>
+                          <span>
+                            {new Date(article.publishDate).toLocaleDateString("en-GB", {
+                              day: "numeric",
+                              month: "short",
+                              year: "numeric",
+                            })}
                           </span>
                         </div>
-                      )}
-                    </div>
-                    <div className="flex min-w-0 flex-1 flex-col p-5">
-                      <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                        <span>{categories.find((c) => c.slug === article.category)?.shortTitle ?? article.category}</span>
-                        <span aria-hidden>·</span>
-                        <span>
-                          {new Date(article.publishDate).toLocaleDateString("en-GB", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                        </span>
-                      </div>
-                      <h3 className="mt-2 font-display text-lg leading-snug text-navy">
-                        {article.title}
-                      </h3>
-                      {article.excerpt && (
-                        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
-                          {article.excerpt}
+                        <h3 className="mt-2 font-display text-base leading-snug text-navy sm:text-lg">
+                          {article.title}
+                        </h3>
+                        {article.excerpt && (
+                          <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-muted-foreground sm:mt-2">
+                            {article.excerpt}
+                          </p>
+                        )}
+                        <p className="mt-2 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy sm:mt-3">
+                          Read the guide
+                          <span aria-hidden className="transition-transform group-hover:translate-x-1">
+                            →
+                          </span>
                         </p>
-                      )}
-                      <p className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-navy">
-                        Read the guide
-                        <span aria-hidden className="transition-transform group-hover:translate-x-1">
-                          →
-                        </span>
-                      </p>
-                    </div>
-                  </Link>
-                ))}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

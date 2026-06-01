@@ -24,13 +24,22 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
   if (!article) return {};
 
+  const siteUrl = "https://taxexpertshub.com";
+  const ogImage = article.imageUrl
+    ? `${siteUrl}${article.imageUrl.startsWith("/") ? "" : "/"}${article.imageUrl}`
+    : `${siteUrl}/images/james-carrington.png`;
+
   return {
     title: `${article.title} — Tax Experts Hub`,
     description: article.excerpt || undefined,
     openGraph: {
       title: `${article.title} — Tax Experts Hub`,
       description: article.excerpt || undefined,
-      images: article.imageUrl ? [{ url: article.imageUrl }] : undefined,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [ogImage],
     },
   };
 }

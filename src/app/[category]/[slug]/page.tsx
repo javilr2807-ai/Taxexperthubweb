@@ -48,10 +48,9 @@ function formatCategory(slug: string): string {
   return slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 }
 
-function estimateReadTime(html: string): number {
+function wordCount(html: string): number {
   const text = html.replace(/<[^>]*>/g, '');
-  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-  return Math.max(1, Math.round(words / 200));
+  return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
 
 export default async function ArticlePage({ params }: { params: Promise<{ category: string; slug: string }> }) {
@@ -74,7 +73,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
 
   const youMayAlsoLike = allRelated.slice(0, 4);
 
-  const readTime = estimateReadTime(article.content);
+  const wc = wordCount(article.content);
   const fallbackSrc = fallbackImages[category];
 
   return (
@@ -93,17 +92,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
             <h1>{article.title}</h1>
 
             <div className="article-meta">
-              <span className="author">By TaxExpertsHub Team</span>
+              <span>{formatCategory(article.category)}</span>
               <span className="dot">·</span>
-              <span className="date">
-                Updated {new Date(article.publishDate).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
-              </span>
+              <span>{new Date(article.publishDate).toLocaleDateString('en-GB')}</span>
               <span className="dot">·</span>
-              <span className="read-time">{readTime} min read</span>
+              <span>{wc.toLocaleString()} words</span>
             </div>
           </header>
 

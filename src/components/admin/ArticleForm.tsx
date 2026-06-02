@@ -32,6 +32,17 @@ export function ArticleForm({ article }: { article?: any }) {
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [uploading, setUploading] = useState(false);
   const [coverUploading, setCoverUploading] = useState(false);
+  const categoryMap: Record<string, string> = {
+    'personal-income-tax': 'personal-income-tax',
+    'freelancer-small-business': 'freelancer-small-business',
+    'crypto-investment': 'crypto-investment',
+    'tax-relief-audits': 'tax-relief-audits',
+    'Personal Income Tax': 'personal-income-tax',
+    'Freelancer & Small Business': 'freelancer-small-business',
+    'Crypto & Investments': 'crypto-investment',
+    'Crypto & Investment Tax': 'crypto-investment',
+    'Tax Relief & Audits': 'tax-relief-audits',
+  };
   const [imageUrl, setImageUrl] = useState(article?.imageUrl || '');
   const [published, setPublished] = useState(article?.published || false);
 
@@ -100,7 +111,7 @@ export function ArticleForm({ article }: { article?: any }) {
 
       <div className="space-y-2">
         <Label htmlFor="category">Category</Label>
-        <Select name="category" defaultValue={article?.category || 'personal-income-tax'}>
+        <Select name="category" defaultValue={categoryMap[article?.category] || 'personal-income-tax'}>
           <SelectTrigger>
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>

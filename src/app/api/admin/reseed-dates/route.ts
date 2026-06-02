@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     const total = interleaved.length;
     const startDate = new Date('2026-01-01T12:00:00Z').getTime();
-    const endDate = new Date('2026-10-01T12:00:00Z').getTime();
+    const endDate = new Date('2026-06-03T12:00:00Z').getTime();
     const interval = (endDate - startDate) / (total - 1);
 
     const updated: { slug: string; date: string }[] = [];

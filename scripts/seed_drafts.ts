@@ -84,7 +84,7 @@ async function main() {
   }
 
   const startDate = new Date('2026-01-01T12:00:00Z').getTime();
-  const endDate = new Date('2026-10-01T12:00:00Z').getTime();
+  const endDate = new Date('2026-06-03T12:00:00Z').getTime();
   const timeSpan = endDate - startDate;
   const interval = timeSpan / (interleaved.length - 1);
 

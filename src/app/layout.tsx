@@ -27,6 +27,9 @@ export const metadata: Metadata = {
     icon: "/favicon.png",
     apple: "/favicon.png",
   },
+  verification: {
+    google: "JzQLVSOfUHxe-1oHvGbsW9xvTFoT594mCNcNoeuaq6Y",
+  },
   openGraph: {
     siteName: "Tax Experts Hub",
     type: "website",

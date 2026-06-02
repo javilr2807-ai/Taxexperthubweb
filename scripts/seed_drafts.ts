@@ -60,16 +60,38 @@ function generateSlug(title: string) {
     .replace(/(^-|-$)+/g, '');
 }
 
+function categorizeArticles() {
+  const cats: Record<string, typeof articles> = {};
+  for (const a of articles) {
+    if (!cats[a.category]) cats[a.category] = [];
+    cats[a.category].push(a);
+  }
+  return cats;
+}
+
 async function main() {
+  const byCategory = categorizeArticles();
+  const catOrder = Object.keys(byCategory);
+  const maxLen = Math.max(...Object.values(byCategory).map(g => g.length));
+
+  const interleaved: typeof articles = [];
+  for (let i = 0; i < maxLen; i++) {
+    for (const cat of catOrder) {
+      if (i < byCategory[cat].length) {
+        interleaved.push(byCategory[cat][i]);
+      }
+    }
+  }
+
   const startDate = new Date('2026-01-01T12:00:00Z').getTime();
-  const endDate = new Date('2026-06-02T12:00:00Z').getTime();
+  const endDate = new Date('2026-10-01T12:00:00Z').getTime();
   const timeSpan = endDate - startDate;
-  const interval = timeSpan / (articles.length - 1);
+  const interval = timeSpan / (interleaved.length - 1);
 
-  console.log(`Starting to insert ${articles.length} draft articles...`);
+  console.log(`Starting to insert ${interleaved.length} draft articles (interleaved dates)...`);
 
-  for (let i = 0; i < articles.length; i++) {
-    const article = articles[i];
+  for (let i = 0; i < interleaved.length; i++) {
+    const article = interleaved[i];
     const slug = generateSlug(article.title);
     const publishDate = new Date(startDate + interval * i);
 

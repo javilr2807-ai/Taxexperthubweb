@@ -9,3 +9,4 @@ uploads
 Dockerfile
 .dockerignore
 README.md
+generated-articles

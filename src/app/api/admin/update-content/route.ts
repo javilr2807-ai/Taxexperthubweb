@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { NextRequest, NextResponse } from 'next/server';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const API_SECRET = process.env.UPDATE_API_SECRET;
 
@@ -32,9 +33,11 @@ export async function POST(request: NextRequest) {
           continue;
         }
 
+        const sanitized = sanitizeHtml(content);
+
         await prisma.article.update({
           where: { slug },
-          data: { content },
+          data: { content: sanitized },
         });
 
         results.push({ slug, status: 'ok' });

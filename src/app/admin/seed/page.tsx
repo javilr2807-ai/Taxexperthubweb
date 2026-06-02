@@ -51,15 +51,45 @@ function slugify(title: string) {
   return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
 }
 
+function categorizeArticles() {
+  const cats: Record<string, typeof articles> = {};
+  for (const a of articles) {
+    if (!cats[a.category]) cats[a.category] = [];
+    cats[a.category].push(a);
+  }
+  return cats;
+}
+
 async function seedArticles() {
   'use server';
+
+  const { cookies } = await import('next/headers');
+  const c = await cookies();
+  if (c.get('admin_session')?.value !== 'authenticated') {
+    throw new Error('Unauthorized');
+  }
+
+  const byCategory = categorizeArticles();
+  const catOrder = Object.keys(byCategory);
+  const maxLen = Math.max(...Object.values(byCategory).map(g => g.length));
+
+  const interleaved: typeof articles = [];
+  for (let i = 0; i < maxLen; i++) {
+    for (const cat of catOrder) {
+      if (i < byCategory[cat].length) {
+        interleaved.push(byCategory[cat][i]);
+      }
+    }
+  }
+
   const startDate = new Date('2026-01-01T12:00:00Z').getTime();
-  const endDate = new Date('2026-06-02T12:00:00Z').getTime();
-  const interval = (endDate - startDate) / (articles.length - 1);
+  const endDate = new Date('2026-06-03T12:00:00Z').getTime();
+  const interval = (endDate - startDate) / (interleaved.length - 1);
+
   let inserted = 0; let errors = 0;
 
-  for (let i = 0; i < articles.length; i++) {
-    const a = articles[i];
+  for (let i = 0; i < interleaved.length; i++) {
+    const a = interleaved[i];
     try {
       await prisma.article.create({
         data: {

@@ -3,48 +3,68 @@
 import { prisma } from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { assertAdmin } from '@/lib/auth';
+import { sanitizeHtml } from '@/lib/sanitize';
+import { z } from 'zod';
+
+const ArticleSchema = z.object({
+  title: z.string().min(1).max(200),
+  slug: z.string().min(1).max(200),
+  category: z.enum([
+    'personal-income-tax',
+    'freelancer-small-business',
+    'crypto-investment',
+    'tax-relief-audits',
+  ]),
+  excerpt: z.string().max(500).optional().default(''),
+  imageUrl: z.string().optional().default(''),
+  content: z.string().min(1),
+  published: z.boolean(),
+  publishDate: z.coerce.date(),
+});
 
 export async function saveArticle(formData: FormData) {
-  const id = formData.get('id') as string | null;
-  const title = formData.get('title') as string;
-  const slug = formData.get('slug') as string;
-  const category = formData.get('category') as string;
-  const excerpt = formData.get('excerpt') as string;
-  const imageUrl = formData.get('imageUrl') as string;
-  const content = formData.get('content') as string;
-  const published = formData.get('published') === 'true';
-  const publishDate = new Date(formData.get('publishDate') as string || new Date());
+  await assertAdmin();
 
-  const data = {
-    title,
-    slug,
-    category,
-    excerpt,
-    imageUrl,
-    content,
-    published,
-    publishDate,
+  const raw = {
+    title: formData.get('title') as string,
+    slug: formData.get('slug') as string,
+    category: formData.get('category') as string,
+    excerpt: (formData.get('excerpt') as string) || '',
+    imageUrl: (formData.get('imageUrl') as string) || '',
+    content: formData.get('content') as string,
+    published: formData.get('published') === 'true',
+    publishDate: formData.get('publishDate') as string || new Date().toISOString(),
   };
+
+  const parsed = ArticleSchema.parse(raw);
+  parsed.content = sanitizeHtml(parsed.content);
+
+  const id = formData.get('id') as string | null;
 
   if (id) {
     await prisma.article.update({
       where: { id },
-      data,
+      data: parsed,
     });
   } else {
     await prisma.article.create({
-      data,
+      data: parsed,
     });
   }
 
   revalidatePath('/admin/articles');
   revalidatePath('/');
-  revalidatePath(`/${category}`);
+  revalidatePath(`/${parsed.category}`);
   redirect('/admin/articles');
 }
 
 export async function toggleArticle(formData: FormData) {
+  await assertAdmin();
+
   const id = formData.get('id') as string;
+  if (!id) throw new Error('Missing article id');
+
   const article = await prisma.article.findUnique({ where: { id } });
   if (!article) throw new Error('Article not found');
 
@@ -59,9 +79,12 @@ export async function toggleArticle(formData: FormData) {
 }
 
 export async function deleteArticleInline(formData: FormData) {
-  const id = formData.get('id') as string;
-  const article = await prisma.article.findUnique({ where: { id } });
+  await assertAdmin();
 
+  const id = formData.get('id') as string;
+  if (!id) return;
+
+  const article = await prisma.article.findUnique({ where: { id } });
   if (!article) return;
 
   await prisma.article.delete({ where: { id } });
@@ -74,6 +97,8 @@ export async function deleteArticleInline(formData: FormData) {
 }
 
 export async function deleteArticle(id: string) {
+  await assertAdmin();
+
   await prisma.article.delete({
     where: { id },
   });

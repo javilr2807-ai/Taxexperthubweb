@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { sanitizeHtml } from '@/lib/sanitize';
 import catPersonal from "@/assets/cat-personal.jpg";
 import catFreelancer from "@/assets/cat-freelancer.jpg";
 import catCrypto from "@/assets/cat-crypto.jpg";
@@ -116,7 +117,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
           </div>
 
           <div className="article-content">
-            <div dangerouslySetInnerHTML={{ __html: article.content }} />
+            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }} />
           </div>
 
           {youMayAlsoLike.length > 0 && (

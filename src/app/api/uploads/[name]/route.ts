@@ -5,10 +5,16 @@ import path from 'path';
 export async function GET(request: Request, { params }: { params: Promise<{ name: string }> } ) {
   const { name } = await params;
   const decodedName = decodeURIComponent(name);
-  const filePath = path.join(process.cwd(), 'uploads', decodedName);
+
+  const uploadsDir = path.resolve(process.cwd(), 'uploads');
+  const resolvedPath = path.resolve(uploadsDir, decodedName);
+
+  if (!resolvedPath.startsWith(uploadsDir + path.sep)) {
+    return new NextResponse('Forbidden', { status: 403 });
+  }
 
   try {
-    const file = await readFile(filePath);
+    const file = await readFile(resolvedPath);
     const ext = path.extname(name).toLowerCase();
     const mime: Record<string, string> = {
       '.jpg': 'image/jpeg',

@@ -4,10 +4,37 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { sanitizeHtml } from '@/lib/sanitize';
+import AdSense from '@/components/AdSense';
+import { AdInjector } from '@/components/AdInjector';
 import catPersonal from "@/assets/cat-personal.jpg";
 import catFreelancer from "@/assets/cat-freelancer.jpg";
 import catCrypto from "@/assets/cat-crypto.jpg";
 import catRelief from "@/assets/cat-relief.jpg";
+
+function injectAdsIntoContent(html: string): string {
+  const adHtml = `
+<div class="ad-wrapper my-8 overflow-hidden flex justify-center w-full" aria-hidden="true">
+  <ins class="adsbygoogle"
+       style="display:block; text-align:center;"
+       data-ad-layout="in-article"
+       data-ad-format="fluid"
+       data-ad-client="ca-pub-6585145551277304"
+       data-ad-slot="2899862202"></ins>
+</div>`;
+  const parts = html.split('</p>');
+  let result = '';
+  // Distribute about 5 ads evenly through the content
+  const interval = Math.max(2, Math.floor(parts.length / 6)); 
+  
+  for (let i = 0; i < parts.length; i++) {
+    result += parts[i] + (i !== parts.length - 1 ? '</p>' : '');
+    // Ensure we don't put an ad at the very end if there's no more content
+    if ((i + 1) % interval === 0 && i < parts.length - 2) {
+      result += adHtml;
+    }
+  }
+  return result;
+}
 
 const fallbackImages: Record<string, typeof catPersonal> = {
   "personal-income-tax": catPersonal,
@@ -94,6 +121,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
   const youMayAlsoLike = allRelated.slice(0, 4);
 
   const wc = wordCount(article.content);
+  const contentWithAds = injectAdsIntoContent(article.content);
   const fallbackSrc = fallbackImages[category];
 
   const siteUrl = "https://taxexpertshub.com";
@@ -130,6 +158,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <AdInjector />
       <article className="tax-article">
       <div className="article-layout">
         <main className="article-main">
@@ -153,6 +182,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
             </div>
           </header>
 
+          <AdSense slot="2564975812" format="horizontal" className="adsbygoogle my-6" />
+
           <div className="article-featured-image" style={{ position: 'relative', width: '100%', height: 'auto', aspectRatio: '16/9' }}>
             {article.imageUrl ? (
               <Image
@@ -172,9 +203,13 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
             ) : null}
           </div>
 
+          <AdSense slot="9030842049" format="auto" className="adsbygoogle my-6" />
+
           <div className="article-content">
-            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }} />
+            <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(contentWithAds) }} />
           </div>
+
+          <AdSense slot="2564975812" format="horizontal" className="adsbygoogle my-8" />
 
           {youMayAlsoLike.length > 0 && (
             <section className="article-related">
@@ -204,6 +239,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
               </div>
             </section>
           )}
+
+          <AdSense slot="7310566260" format="vertical" className="adsbygoogle my-8" />
         </main>
       </div>
     </article>

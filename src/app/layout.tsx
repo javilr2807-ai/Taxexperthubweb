@@ -3,6 +3,7 @@ import { Instrument_Serif, Work_Sans } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import "../styles.css";
+import Script from "next/script";
 
 const instrumentSerif = Instrument_Serif({
   weight: ["400"],
@@ -47,6 +48,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6585145551277304" 
+          crossOrigin="anonymous" 
+          strategy="afterInteractive" 
+        />
+      </head>
       <body className={`${instrumentSerif.variable} ${workSans.variable} antialiased`}>
         <div className="flex min-h-screen flex-col">
           <SiteHeader />

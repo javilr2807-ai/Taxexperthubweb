@@ -1,11 +1,11 @@
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  baseURL: 'https://api.deepseek.com',
-  apiKey: process.env.DEEPSEEK_API_KEY,
-});
-
 export async function generateArticleContent(title: string, excerpt: string): Promise<string> {
+  const openai = new OpenAI({
+    baseURL: 'https://api.deepseek.com',
+    apiKey: process.env.DEEPSEEK_API_KEY || 'dummy_key_for_build', // Fallback to prevent build errors if env var is missing during build
+  });
+
   const systemPrompt = `You are an expert, professional tax and financial writer for TaxExpertsHub.
 Your task is to write a highly detailed, SEO-optimized, 2000-word article on the given topic.
 

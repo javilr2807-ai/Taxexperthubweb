@@ -56,6 +56,7 @@ export async function saveArticle(formData: FormData) {
   revalidatePath('/admin/articles');
   revalidatePath('/');
   revalidatePath(`/${parsed.category}`);
+  revalidatePath(`/${parsed.category}/${parsed.slug}`);
   redirect('/admin/articles');
 }
 
@@ -76,6 +77,7 @@ export async function toggleArticle(formData: FormData) {
   revalidatePath('/admin/articles');
   revalidatePath('/');
   revalidatePath(`/${article.category}`);
+  revalidatePath(`/${article.category}/${article.slug}`);
 }
 
 export async function deleteArticleInline(formData: FormData) {
@@ -94,6 +96,7 @@ export async function deleteArticleInline(formData: FormData) {
     revalidatePath('/');
     revalidatePath(`/${article.category}`);
   }
+  revalidatePath(`/${article.category}/${article.slug}`);
 }
 
 export async function deleteArticle(id: string) {

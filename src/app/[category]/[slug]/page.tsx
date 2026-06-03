@@ -30,9 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
     ? `${siteUrl}${article.imageUrl.startsWith("/") ? "" : "/"}${article.imageUrl}`
     : `${siteUrl}/images/james-carrington.png`;
 
+  const keywordList = article.title.split(" ").filter((w: string) => w.length > 3).map((w: string) => w.toLowerCase());
+  keywordList.push(article.category.replace(/-/g, " "));
+  keywordList.push("tax guide", "tax experts hub");
+
   return {
     title: `${article.title} — Tax Experts Hub`,
     description: article.excerpt || undefined,
+    keywords: keywordList,
     openGraph: {
       title: `${article.title} — Tax Experts Hub`,
       description: article.excerpt || undefined,
@@ -77,8 +82,41 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
   const wc = wordCount(article.content);
   const fallbackSrc = fallbackImages[category];
 
+  const siteUrl = "https://taxexpertshub.com";
+  const ogImage = article.imageUrl
+    ? `${siteUrl}${article.imageUrl.startsWith("/") ? "" : "/"}${article.imageUrl}`
+    : `${siteUrl}/images/james-carrington.png`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt || undefined,
+    image: ogImage,
+    datePublished: article.publishDate.toISOString(),
+    dateModified: article.updatedAt.toISOString(),
+    author: {
+      "@type": "Organization",
+      name: "TaxExperts Team",
+      url: siteUrl
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Tax Experts Hub",
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteUrl}/favicon.png`
+      }
+    }
+  };
+
   return (
-    <article className="tax-article">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <article className="tax-article">
       <div className="article-layout">
         <main className="article-main">
           <nav className="breadcrumbs">
@@ -151,5 +189,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
         </main>
       </div>
     </article>
+    </>
   );
 }

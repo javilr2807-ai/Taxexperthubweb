@@ -6,8 +6,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://taxexpertshub.com/legal-notice" },
   openGraph: {
     title: "Legal Notice — Tax Experts Hub",
-    description: "Legal Notice for Tax Experts Hub. Publisher information, contact details, and legal disclaimers.",
+    description: "Legal Notice for Tax Experts Hub. Important information about the educational nature of our content.",
     url: "https://taxexpertshub.com/legal-notice",
+  },
+  robots: {
+    index: false,
+    follow: true,
   },
 };
 

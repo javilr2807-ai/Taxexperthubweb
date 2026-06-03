@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     description: "Learn about the cookies used on Tax Experts Hub, including Google AdSense cookies, and how to manage your preferences.",
     url: "https://taxexpertshub.com/cookie-policy",
   },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function CookiePolicyPage() {

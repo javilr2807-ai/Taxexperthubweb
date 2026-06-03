@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://taxexpertshub.com"),
   title: "Tax Experts Hub | U.S. Tax Guides for Individuals & Small Businesses",
   description: "Practical U.S. tax guides for individuals, freelancers, self-employed workers, and small businesses. Learn about IRS forms, tax deductions, credits, audits, and filing rules in plain English.",
+  keywords: ["U.S. tax guides", "tax deductions", "IRS forms", "freelancer taxes", "small business tax", "self-employed tax", "personal income tax", "tax relief", "IRS audit help", "crypto tax guide", "tax explanations"],
   authors: [{ name: "Tax Experts Hub" }],
   icons: {
     icon: "/favicon.png",

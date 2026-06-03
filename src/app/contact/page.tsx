@@ -4,6 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Contact — Tax Experts Hub",
   description: "Get in touch with Tax Experts Hub. Send us a question, suggestion, or feedback about our tax coverage.",
+  keywords: ["contact tax experts hub", "tax questions", "tax advice contact", "tax feedback", "reach tax experts"],
   alternates: { canonical: "https://taxexpertshub.com/contact" },
   openGraph: {
     title: "Contact — Tax Experts Hub",
@@ -13,8 +14,20 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact — Tax Experts Hub",
+    description: "Get in touch with Tax Experts Hub. Send us a question, suggestion, or feedback about our tax coverage.",
+    url: "https://taxexpertshub.com/contact",
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Masthead */}
       <section className="border-b border-border bg-navy text-paper">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">

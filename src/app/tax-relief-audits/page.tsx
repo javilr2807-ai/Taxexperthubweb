@@ -8,6 +8,7 @@ const cat = getCategory("tax-relief-audits")!;
 export const metadata: Metadata = {
   title: `${cat.title} — Tax Experts Hub`,
   description: cat.description,
+  keywords: ["tax relief", "IRS audit help", "back taxes", "tax debt resolution", "IRS payment plan", "offer in compromise", "tax penalties"],
   alternates: {
     canonical: `https://taxexpertshub.com/tax-relief-audits`,
   },
@@ -26,5 +27,21 @@ export default async function Page() {
     select: { slug: true, title: true, excerpt: true, imageUrl: true, publishDate: true },
   });
 
-  return <CategoryPage category={cat} articles={articles} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${cat.title} — Tax Experts Hub`,
+    description: cat.description,
+    url: "https://taxexpertshub.com/tax-relief-audits",
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <CategoryPage category={cat} articles={articles} />
+    </>
+  );
 }

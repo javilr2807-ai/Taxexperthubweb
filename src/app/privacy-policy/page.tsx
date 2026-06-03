@@ -9,6 +9,10 @@ export const metadata: Metadata = {
     description: "Privacy Policy for Tax Experts Hub. Learn how we collect, use, and protect your personal information.",
     url: "https://taxexpertshub.com/privacy-policy",
   },
+  robots: {
+    index: false,
+    follow: true,
+  },
 };
 
 export default function PrivacyPolicyPage() {

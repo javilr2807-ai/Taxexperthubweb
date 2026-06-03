@@ -6,8 +6,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://taxexpertshub.com/terms-of-service" },
   openGraph: {
     title: "Terms of Service — Tax Experts Hub",
-    description: "Terms of Service for Tax Experts Hub. Read the rules and guidelines for using our website.",
+    description: "Terms of Service for Tax Experts Hub. Read our terms regarding the use of our educational tax content.",
     url: "https://taxexpertshub.com/terms-of-service",
+  },
+  robots: {
+    index: false,
+    follow: true,
   },
 };
 

@@ -8,6 +8,7 @@ const cat = getCategory("crypto-investment")!;
 export const metadata: Metadata = {
   title: `${cat.title} — Tax Experts Hub`,
   description: cat.description,
+  keywords: ["crypto taxes", "bitcoin tax", "cryptocurrency capital gains", "how to report crypto taxes", "IRS crypto rules", "NFT taxes"],
   alternates: {
     canonical: `https://taxexpertshub.com/crypto-investment`,
   },
@@ -26,5 +27,21 @@ export default async function Page() {
     select: { slug: true, title: true, excerpt: true, imageUrl: true, publishDate: true },
   });
 
-  return <CategoryPage category={cat} articles={articles} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${cat.title} — Tax Experts Hub`,
+    description: cat.description,
+    url: "https://taxexpertshub.com/crypto-investment",
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <CategoryPage category={cat} articles={articles} />
+    </>
+  );
 }

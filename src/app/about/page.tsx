@@ -4,6 +4,7 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "About — Tax Experts Hub",
   description: "Tax Experts Hub is an independent educational publication covering U.S. tax topics, IRS procedures, and personal finance for everyday readers.",
+  keywords: ["about tax experts hub", "tax publication", "tax education", "US tax topics", "independent tax guide"],
   alternates: { canonical: "https://taxexpertshub.com/about" },
   openGraph: {
     title: "About — Tax Experts Hub",
@@ -13,8 +14,20 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About — Tax Experts Hub",
+    description: "Tax Experts Hub is an independent educational publication covering U.S. tax topics, IRS procedures, and personal finance for everyday readers.",
+    url: "https://taxexpertshub.com/about",
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Masthead */}
       <section className="border-b border-border bg-navy text-paper">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">

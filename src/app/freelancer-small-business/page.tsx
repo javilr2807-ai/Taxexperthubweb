@@ -8,6 +8,7 @@ const cat = getCategory("freelancer-small-business")!;
 export const metadata: Metadata = {
   title: `${cat.title} — Tax Experts Hub`,
   description: cat.description,
+  keywords: ["freelancer taxes", "small business tax guide", "self-employed tax deductions", "1099 taxes", "business expenses", "sole proprietorship tax", "LLC taxes"],
   alternates: {
     canonical: `https://taxexpertshub.com/freelancer-small-business`,
   },
@@ -26,5 +27,21 @@ export default async function Page() {
     select: { slug: true, title: true, excerpt: true, imageUrl: true, publishDate: true },
   });
 
-  return <CategoryPage category={cat} articles={articles} />;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: `${cat.title} — Tax Experts Hub`,
+    description: cat.description,
+    url: "https://taxexpertshub.com/freelancer-small-business",
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <CategoryPage category={cat} articles={articles} />
+    </>
+  );
 }

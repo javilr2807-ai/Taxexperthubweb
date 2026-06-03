@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Tax Experts Hub | U.S. Tax Guides for Individuals & Small Businesses",
   description:
     "Practical U.S. tax guides for individuals, freelancers, self-employed workers, and small businesses. Learn about IRS forms, tax deductions, credits, audits, and filing rules in plain English.",
+  keywords: ["tax guides", "IRS updates", "small business tax tips", "tax deductions", "individual tax returns", "tax credits", "freelance taxes", "tax experts"],
   alternates: {
     canonical: "https://taxexpertshub.com",
   },
@@ -44,9 +45,15 @@ export default async function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Tax Experts Hub",
-    "url": "https://taxexpertshub.com",
-    "inLanguage": "en-US",
+    name: "Tax Experts Hub",
+    url: "https://taxexpertshub.com",
+    inLanguage: "en-US",
+    description: "Practical U.S. tax guides for individuals, freelancers, self-employed workers, and small businesses.",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://taxexpertshub.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (

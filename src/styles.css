@@ -140,10 +140,11 @@
     font-feature-settings: "ss01", "cv11";
   }
 
-  img {
+  img, video, canvas {
     max-width: 100%;
     height: auto;
     display: block;
+    overflow: clip;
   }
 
   h1, h2, h3, h4 {

@@ -31,7 +31,7 @@ const articles = [
   { title: "What Happens If You Don't Report Crypto Gains?", category: "crypto-investment", excerpt: "Understand the risks, penalties, and potential IRS audits if you fail to report your cryptocurrency earnings." },
   { title: "Are Stablecoins Taxable?", category: "crypto-investment", excerpt: "Learn how the IRS taxes stablecoin transactions, including earning interest, trading, and spending." },
   { title: "How Are Dividends Taxed?", category: "crypto-investment", excerpt: "A guide to understanding the difference between qualified and ordinary dividends and their respective tax rates." },
-  { title: "Long-Term vs Short-Term Capital Gains Tax", category: "crypto-investment", excerpt: "Compare the tax rates for long-term and short-term capital gains to optimize your investment strategy." },
+  { title: "Long-Term vs. Short-Term Capital Gains Tax Rates Explained", slug: "long-term-vs-short-term-capital-gains-tax", category: "crypto-investment", excerpt: "Compare long-term vs. short-term capital gains tax rates to maximize your returns. Understand the holding periods and learn how strategic investing can drastically lower your tax burden." },
   { title: "Do You Pay Taxes on ETFs?", category: "crypto-investment", excerpt: "Learn how Exchange-Traded Funds (ETFs) are taxed, including capital gains and dividend distributions." },
   { title: "How Does Tax Loss Harvesting Work?", category: "crypto-investment", excerpt: "Discover how to use tax-loss harvesting to sell losing investments and minimize your overall tax burden." },
   { title: "What Investment Income Is Tax-Free?", category: "crypto-investment", excerpt: "Explore investment strategies that generate tax-free income, such as municipal bonds and Roth IRAs." },
@@ -94,7 +94,7 @@ async function seedArticles() {
       await prisma.article.create({
         data: {
           title: a.title,
-          slug: slugify(a.title),
+          slug: (a as any).slug || slugify(a.title),
           category: a.category,
           excerpt: a.excerpt,
           content: '',

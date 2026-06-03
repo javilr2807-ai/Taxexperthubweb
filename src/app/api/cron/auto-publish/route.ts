@@ -60,7 +60,6 @@ export async function GET(request: Request) {
     const draft = await prisma.article.findFirst({
       where: {
         published: false,
-        content: '', // Ensure we don't overwrite a draft the admin is currently writing
       },
       orderBy: {
         publishDate: 'asc' // Pick the oldest draft first

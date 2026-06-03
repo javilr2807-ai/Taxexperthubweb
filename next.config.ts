@@ -23,7 +23,6 @@ const nextConfig: NextConfig = {
               "connect-src 'self' https:",
               "frame-src 'self' https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://www.youtube.com https://*.adtrafficquality.google",
               "frame-ancestors 'none'",
-              "require-trusted-types-for 'script'",
             ].join("; "),
           },
         ],

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import { logout } from '../actions';
 import { Button } from '@/components/ui/button';
-import { LogOut, FileText } from 'lucide-react';
+import { LogOut, FileText, Clock } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
@@ -18,6 +18,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           >
             <FileText className="h-4 w-4" />
             Articles
+          </Link>
+          <Link
+            href="/admin/cron"
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium hover:bg-navy-soft"
+          >
+            <Clock className="h-4 w-4" />
+            Automations
           </Link>
 
         </nav>

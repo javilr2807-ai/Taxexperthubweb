@@ -68,6 +68,12 @@ export async function GET(request: Request) {
     });
 
     if (!draft) {
+      await prisma.cronLog.create({
+        data: {
+          status: 'ERROR',
+          message: 'Fallo al publicar: No quedan borradores vacíos en la base de datos.',
+        }
+      });
       return NextResponse.json({ message: 'Skipped: No empty drafts available to publish.' });
     }
 
@@ -77,6 +83,12 @@ export async function GET(request: Request) {
       try {
         console.log(`[Auto-Publish] Starting background generation for article ID: ${draft.id}`);
         const htmlContent = await generateArticleContent(draft.title, draft.excerpt || '');
+        
+        // Basic check if DeepSeek failed or returned empty
+        if (!htmlContent || htmlContent.length < 100) {
+           throw new Error('DeepSeek devolvió un contenido vacío o demasiado corto.');
+        }
+
         const cleanHtml = htmlContent.replace(/^```html\n?/, '').replace(/```$/, '').trim();
 
         await prisma.article.update({
@@ -88,13 +100,30 @@ export async function GET(request: Request) {
           }
         });
 
+        // Log success
+        await prisma.cronLog.create({
+          data: {
+            status: 'SUCCESS',
+            message: `Publicado exitosamente a las ${new Date().toLocaleTimeString('es-ES')}.`,
+            articleId: draft.id,
+          }
+        });
+
         revalidatePath('/');
         revalidatePath('/admin/articles');
         revalidatePath(`/${draft.category}`);
         revalidatePath(`/${draft.category}/${draft.slug}`);
         console.log(`[Auto-Publish] Successfully published: ${draft.title}`);
-      } catch (err) {
+      } catch (err: any) {
         console.error('[Auto-Publish] Background task failed:', err);
+        // Log error
+        await prisma.cronLog.create({
+          data: {
+            status: 'ERROR',
+            message: `Error de DeepSeek o Base de Datos: ${err.message || 'Error desconocido'}`,
+            articleId: draft.id,
+          }
+        });
       }
     }, delayMs);
 
@@ -107,6 +136,12 @@ export async function GET(request: Request) {
 
   } catch (error: any) {
     console.error('CRON Auto-Publish Error:', error);
+    await prisma.cronLog.create({
+      data: {
+        status: 'ERROR',
+        message: `Error interno de la ruta API: ${error.message || 'Error desconocido'}`,
+      }
+    });
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

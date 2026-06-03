@@ -52,7 +52,11 @@ export async function GET(request: Request) {
       });
     }
 
-    // 3. Find an unpublished draft
+    // 3. We decided to publish this hour! Pick a random minute between 0 and 59.
+    const randomMinute = Math.floor(Math.random() * 60);
+    const delayMs = randomMinute * 60 * 1000;
+
+    // 4. Find an unpublished draft immediately so we know if we have work to do
     const draft = await prisma.article.findFirst({
       where: {
         published: false,
@@ -67,32 +71,38 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: 'Skipped: No empty drafts available to publish.' });
     }
 
-    // 4. Generate the content using DeepSeek
-    const htmlContent = await generateArticleContent(draft.title, draft.excerpt || '');
-    
-    // Clean up potential markdown formatting blocks returned by the LLM
-    const cleanHtml = htmlContent.replace(/^```html\n?/, '').replace(/```$/, '').trim();
+    // 5. Schedule the publication in the background
+    // Since this runs on a VPS (Node.js), setTimeout will keep running after the response is sent.
+    setTimeout(async () => {
+      try {
+        console.log(`[Auto-Publish] Starting background generation for article ID: ${draft.id}`);
+        const htmlContent = await generateArticleContent(draft.title, draft.excerpt || '');
+        const cleanHtml = htmlContent.replace(/^```html\n?/, '').replace(/```$/, '').trim();
 
-    // 5. Update database
-    await prisma.article.update({
-      where: { id: draft.id },
-      data: {
-        content: cleanHtml,
-        published: true,
-        publishDate: new Date(), // Set publish date to exactly right now
+        await prisma.article.update({
+          where: { id: draft.id },
+          data: {
+            content: cleanHtml,
+            published: true,
+            publishDate: new Date(), // Set publish date to the exact random time
+          }
+        });
+
+        revalidatePath('/');
+        revalidatePath('/admin/articles');
+        revalidatePath(`/${draft.category}`);
+        revalidatePath(`/${draft.category}/${draft.slug}`);
+        console.log(`[Auto-Publish] Successfully published: ${draft.title}`);
+      } catch (err) {
+        console.error('[Auto-Publish] Background task failed:', err);
       }
-    });
-
-    // 6. Purge cache
-    revalidatePath('/');
-    revalidatePath('/admin/articles');
-    revalidatePath(`/${draft.category}`);
-    revalidatePath(`/${draft.category}/${draft.slug}`);
+    }, delayMs);
 
     return NextResponse.json({ 
-      message: 'Successfully generated and published article!',
+      message: `Success: Article will be published in ${randomMinute} minutes to ensure a random timestamp.`,
       articleId: draft.id,
-      title: draft.title
+      title: draft.title,
+      scheduledMinute: randomMinute
     });
 
   } catch (error: any) {

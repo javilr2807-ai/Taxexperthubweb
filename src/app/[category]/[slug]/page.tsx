@@ -59,6 +59,20 @@ function wordCount(html: string): number {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
 
+export const revalidate = 3600; // revalidate at most every hour
+
+export async function generateStaticParams() {
+  const articles = await prisma.article.findMany({
+    where: { published: true },
+    select: { category: true, slug: true },
+  });
+
+  return articles.map((article) => ({
+    category: article.category,
+    slug: article.slug,
+  }));
+}
+
 export default async function ArticlePage({ params }: { params: Promise<{ category: string; slug: string }> }) {
   const { category, slug } = await params;
 

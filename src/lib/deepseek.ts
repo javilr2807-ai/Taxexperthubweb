@@ -7,7 +7,7 @@ export async function generateArticleContent(title: string, excerpt: string): Pr
   });
 
   const systemPrompt = `You are an expert, professional tax and financial writer for TaxExpertsHub.
-Your task is to write a highly detailed, SEO-optimized, 2000-word article on the given topic.
+Your task is to write a highly detailed, SEO-optimized article on the given topic. The article MUST be written entirely in English.
 
 You MUST format your output strictly as raw HTML, following these exact rules:
 1. Do NOT output a <html> or <body> tag. Your output will be injected inside a <div class="article-content">.
@@ -18,7 +18,7 @@ You MUST format your output strictly as raw HTML, following these exact rules:
      <p>Summarize the main answer here. Use <strong>bold</strong> for emphasis.</p>
    </section>
 4. Use standard <section> for body paragraphs, wrapped in <p> tags.
-5. Use <h2> and <h3> for headings. Do NOT use <h1>.
+5. Use <h2> and <h3> for headings. Do NOT use <h1>. Ensure headings are rich in LSI (Latent Semantic Indexing) keywords for SEO.
 6. Include at least ONE table using this exact structure:
    <div class="table-wrapper">
      <table>
@@ -37,7 +37,7 @@ You MUST format your output strictly as raw HTML, following these exact rules:
    <div class="reason-grid">
      <div class="info-card"><h3>Reason</h3><p>Text</p></div>
    </div>
-9. Include an FAQ section at the end (before conclusion):
+9. Include an FAQ section at the end (before conclusion) using Schema.org friendly formatting (clear Q&A structure):
    <section>
      <h2>Frequently Asked Questions</h2>
      <div class="faq-list">
@@ -51,13 +51,17 @@ You MUST format your output strictly as raw HTML, following these exact rules:
     </section>
 
 Do not include any markdown code block formatting (like \`\`\`html) around your response. Just return the raw HTML.
-Ensure the content is comprehensive, authoritative, and perfectly answers the user intent behind the title.`;
+Ensure the content is comprehensive, authoritative, perfectly answers the user intent behind the title, and follows strict On-Page SEO guidelines.`;
 
-  const userPrompt = `Please write the full article.
+  const userPrompt = `Please write the full article in ENGLISH.
 Title: ${title}
 Excerpt/Summary to expand on: ${excerpt}
 
-Ensure the article is at least 1500-2000 words in length and strictly follows the HTML formatting rules.`;
+CRITICAL REQUIREMENTS:
+- The article MUST be written entirely in English.
+- The article MUST be highly optimized for SEO, targeting search intent for the title.
+- The article MUST contain a minimum of 2000 words. Expand deeply on tax rules, exceptions, real-world examples, and step-by-step guidance to reach the word count naturally.
+- Strictly follow the HTML formatting rules provided.`;
 
   const response = await openai.chat.completions.create({
     model: 'deepseek-chat',

@@ -22,6 +22,8 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
           alt={category.imageAlt}
           fill
           priority
+          sizes="100vw"
+          quality={90}
           className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
         <div
@@ -82,9 +84,11 @@ export function CategoryPage({ category, articles = [] }: { category: Category; 
                 >
                   {a.imageUrl && (
                     <div className="aspect-video relative overflow-hidden">
-                      <img
+                      <Image
                         src={a.imageUrl}
                         alt={a.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>

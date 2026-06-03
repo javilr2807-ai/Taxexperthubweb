@@ -139,11 +139,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
             </div>
           </header>
 
-          <div className="article-featured-image">
+          <div className="article-featured-image" style={{ position: 'relative', width: '100%', height: 'auto', aspectRatio: '16/9' }}>
             {article.imageUrl ? (
-              <img
+              <Image
                 src={article.imageUrl}
                 alt={article.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 800px"
+                style={{ objectFit: 'cover', borderRadius: '8px' }}
               />
             ) : fallbackSrc ? (
               <Image
@@ -169,8 +173,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ catego
                     className="related-card"
                   >
                     {a.imageUrl ? (
-                      <div className="related-card-img">
-                        <img src={a.imageUrl} alt={a.title} />
+                      <div className="related-card-img" style={{ position: 'relative' }}>
+                        <Image src={a.imageUrl} alt={a.title} fill sizes="(max-width: 768px) 100vw, 300px" style={{ objectFit: 'cover' }} />
                       </div>
                     ) : (
                       <div className="related-card-img related-card-img-fallback">

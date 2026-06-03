@@ -36,12 +36,19 @@ export default async function AdminArticlesPage() {
       <div key={article.id} className="rounded-md border border-border bg-card p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground flex items-center">
               {formatCategory(article.category)}
-              <span className="mx-1.5">·</span>
-              {new Date(article.publishDate).toLocaleDateString('en-GB')}
-              <span className="mx-1.5">·</span>
-              {wordCount(article.content)} words
+              <span className="mx-1.5">•</span>
+              {article.published ? (
+                <span className="text-green-600 font-medium bg-green-50 px-1.5 py-0.5 rounded mr-1.5">Publicado</span>
+              ) : (
+                <span className="text-amber-600 font-medium bg-amber-50 px-1.5 py-0.5 rounded mr-1.5">Borrador</span>
+              )}
+              {new Date(article.publishDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}
+              {' a las '}
+              {new Date(article.publishDate).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
+              <span className="mx-1.5">•</span>
+              {wordCount(article.content)} palabras
             </p>
             <h3 className="mt-1 font-display text-xl text-navy">
               <Link href={`/admin/articles/${article.id}`} className="hover:text-brass transition-colors">

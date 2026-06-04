@@ -111,6 +111,13 @@ export async function GET(request: Request) {
           }
         });
 
+        // Clear old errors since the publish was successful
+        await prisma.cronLog.deleteMany({
+          where: {
+            status: 'ERROR'
+          }
+        });
+
         try {
           await fetch(`${baseUrl}/api/revalidate`, {
             method: 'POST',

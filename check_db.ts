@@ -13,10 +13,8 @@ async function main() {
     const logRes = await client.query('SELECT * FROM "CronLog" ORDER BY "createdAt" DESC LIMIT 1;');
     console.log(logRes.rows[0]);
     
-    console.log('\n--- ÚLTIMO ARTÍCULO ---');
-    const articleRes = await client.query('SELECT title, content FROM "Article" ORDER BY "publishDate" DESC LIMIT 1;');
-    console.log(articleRes.rows[0].title);
-    console.log(articleRes.rows[0].content.substring(0, 500));
+    const deleteRes = await client.query("DELETE FROM \"CronLog\" WHERE status = 'ERROR';");
+    console.log(`Borrados ${deleteRes.rowCount} errores antiguos.`);
 
   } catch (error) {
     console.error('Error:', error);

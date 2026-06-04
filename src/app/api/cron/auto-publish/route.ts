@@ -9,8 +9,7 @@ export const maxDuration = 300;
 export async function GET(request: Request) {
   try {
     const authHeader = request.headers.get('authorization');
-    const secret = process.env.CRON_SECRET;
-    
+    const secret = process.env.CRON_SECRET || process.env.UPDATE_API_SECRET;
     if (!secret || authHeader !== `Bearer ${secret}`) {
       // Return 401 but generic message to prevent probing
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });

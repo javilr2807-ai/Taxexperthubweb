@@ -75,6 +75,10 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: 'Skipped: No empty drafts available to publish.' });
     }
 
+    const host = request.headers.get('host') || 'localhost:3000';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
+
     // 5. Schedule the publication in the background
     // Since this runs on a VPS (Node.js), setTimeout will keep running after the response is sent.
     setTimeout(async () => {
@@ -107,11 +111,24 @@ export async function GET(request: Request) {
           }
         });
 
-        revalidatePath('/');
-        revalidatePath('/admin/articles');
-        revalidatePath(`/${draft.category}`);
-        revalidatePath(`/${draft.category}/${draft.slug}`);
-        console.log(`[Auto-Publish] Successfully published: ${draft.title}`);
+        try {
+          await fetch(`${baseUrl}/api/revalidate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              secret: process.env.CRON_SECRET || process.env.UPDATE_API_SECRET,
+              paths: [
+                '/',
+                '/admin/articles',
+                `/${draft.category}`,
+                `/${draft.category}/${draft.slug}`
+              ]
+            })
+          });
+          console.log(`[Auto-Publish] Successfully published & revalidated: ${draft.title}`);
+        } catch (revErr) {
+          console.error('[Auto-Publish] Error triggering revalidate API:', revErr);
+        }
       } catch (err: any) {
         console.error('[Auto-Publish] Background task failed:', err);
         // Log error

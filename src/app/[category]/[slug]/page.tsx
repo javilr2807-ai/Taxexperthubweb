@@ -13,8 +13,8 @@ import catRelief from "@/assets/cat-relief.jpg";
 
 function injectAdsIntoContent(html: string): string {
   const adHtml = `
-<div class="ad-wrapper my-8 overflow-hidden flex justify-center w-full" aria-hidden="true">
-  <ins class="adsbygoogle adsbygoogle-injected"
+<div class="ad-wrapper my-8 overflow-hidden w-full" aria-hidden="true">
+  <ins class="adsbygoogle adsbygoogle-injected block w-full"
        style="display:block; text-align:center;"
        data-ad-layout="in-article"
        data-ad-format="fluid"

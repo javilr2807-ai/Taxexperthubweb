@@ -49,12 +49,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script 
+        <script 
           async 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6585145551277304" 
           crossOrigin="anonymous" 
-          strategy="afterInteractive" 
-        />
+        ></script>
       </head>
       <body className={`${instrumentSerif.variable} ${workSans.variable} antialiased`}>
         <div className="flex min-h-screen flex-col">

@@ -29,9 +29,9 @@ export default function AdSense({
   }, []);
 
   return (
-    <div className="ad-wrapper my-8 overflow-hidden flex justify-center w-full" aria-hidden="true">
+    <div className="ad-wrapper my-8 overflow-hidden w-full" aria-hidden="true">
       <ins
-        className={className}
+        className={`${className} block w-full`}
         style={style}
         data-ad-client="ca-pub-6585145551277304"
         data-ad-slot={slot}
